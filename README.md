@@ -15,3 +15,6 @@ Para implementação do sistema serão utilizadas as seguintes tecnologias:
  * Back-end em Node.js e Express;
  * Front-end em HTML, CSS, Bootstrap e Vue.js;
  * Banco de dados em MySQL.
+
+GitHub Projects:
+https://github.com/andrelr90/engenharia_software_tp/projects/1
