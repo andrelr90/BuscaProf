@@ -1,4 +1,4 @@
-# TP de Engenharia de Software (Nome a definir)
+# BuscaProf
 Sistema para encontro e contato com professores particulares para as disciplinas obrigatórias ofertadas no curso de Ciência da Computação.
 
 ### Equipe:
