@@ -1,3 +1,5 @@
+const cors = require("cors");
+
 const express = require("express");
 const session = require('express-session');
 
@@ -6,6 +8,7 @@ const app = express();
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 const SESSION_CONFIG = {secret: 'TESTE',
         resave: false,
@@ -17,7 +20,7 @@ app.use(session(SESSION_CONFIG));
 
 app.post("/teste", (req, res) => {
     console.log("Teste");
-    const teste = req.body.id; 
+    const teste = req.body.id;
     res.json({'TESTE': teste});
 });
 
