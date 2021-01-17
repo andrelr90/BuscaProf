@@ -16,5 +16,8 @@ Para implementação do sistema serão utilizadas as seguintes tecnologias:
  * Front-end em HTML, CSS, Bootstrap e Vue.js;
  * Banco de dados em MySQL.
 
-Sprint (GitHub Projects):
+### Projeto inicial do banco de dados:
+![Alt text](backend/db_project/db_tables_project.png?raw=true "Projeto de tabelas do banco de dados.")
+
+### Sprint (GitHub Projects):
 https://github.com/andrelr90/engenharia_software_tp/projects/1
