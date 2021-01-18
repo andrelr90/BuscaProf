@@ -6,17 +6,17 @@ const session = require('express-session');
 const bodyParser = require('body-parser')
 const app = express();
 
+const passport = require("passport");
+const LocalStrategy = require('passport-local').Strategy;
+
+const {sessionConfig, passportConfig} = require("./config.js");
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
-const SESSION_CONFIG = {secret: 'TESTE',
-        resave: false,
-        saveUninitialized: false,
-        cookie: { maxAge: 30 * 60 * 1000 }//30min
-    };
-    
-app.use(session(SESSION_CONFIG));
+sessionConfig(app, session);
+passportConfig(app, passport, LocalStrategy);
 
 app.post("/teste", (req, res) => {
     console.log("Teste");
