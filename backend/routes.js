@@ -1,3 +1,5 @@
+const userController = require("./src/controller/UserController.js");
+
 function passportLogin(passport) {
     return (req, res, next) => {
         return passport.authenticate('local', (err, user, info) => {
@@ -53,6 +55,8 @@ let setupRoutes = (app, passport) => {
     app.get("/logged", passportCheckLogin('teste'), (req, res) => {
         res.send({id: req.user.id});
     });
+
+    app.post("/register", (req, res) => userController.createUser(req, res));
 
     app.get("/logout", passportLogout());
 }
