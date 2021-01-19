@@ -1,24 +1,42 @@
-html,
-body {
-  height: 100%;
+html{
+    height: 100%;
+}
+
+body{
+  position: relative;
+  min-height: 100%;
+
+  padding-bottom: calc(3rem + 100px);
 }
 
 #page-content {
-  flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 #sticky-footer {
     flex-shrink: none;
 }
 footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
+    position: absolute;
+    bottom: 0px;
+}
+#footer-inside{
+  height:100px;
 }
 
-body {
+
+#main-image{
+    width: 100%;
+    height: calc(100vh - 56px);
+    
     background-image: url(../imagens/fundo.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-   }
+}
+
+#main-image-filter{
+  height: 100%;
+  background-color: rgba(50,50,50, 0.5);
+}
