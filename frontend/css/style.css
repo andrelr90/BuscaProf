@@ -40,3 +40,14 @@ footer {
   height: 100%;
   background-color: rgba(50,50,50, 0.5);
 }
+
+@media only screen and (max-width: 600px) {
+  #form {
+    width: 100% !important;
+  }
+}
+@media only screen and (min-width: 600px) {
+  #form {
+    width: 390px !important;
+  }
+}
