@@ -1,5 +1,6 @@
 const User = require('../model/User')
 //const hashService = require('../util/cryptService')
+const userSchema = require("../schema/UserSchema");
 
 class UserController {
     constructor(hashService, userSchema) {
@@ -11,14 +12,10 @@ class UserController {
         console.log(req.body)
         const {email, password, name, professor} = req.body;
 
-        console.log(email, password)
-
         const hashedPassword = await this.hashPassword(password);
         console.log(hashedPassword);
         const newUser = new User({email: email, password: hashedPassword, name: name, professor: professor})
-        //const {success, err} = await userSchema.createUser(newUser);
-        const success = true;
-        const err = false;
+        const {success, err} = await userSchema.createUser(newUser);
         console.log(newUser)
 
         return res.json({success: success, err: err});
@@ -27,8 +24,6 @@ class UserController {
     async updateUser(req, res) {
         console.log(req.body)
         const {id, password, name, professor} = req.body;
-
-        console.log(email, password)
 
         const hashedPassword = await this.hashPassword(password);
         console.log(hashedPassword);
@@ -41,9 +36,9 @@ class UserController {
     async deleteUser(req, res) {
         const {id} = req.body;
         const userToBeDeleted = new User({id: id})
-        const success = await userSchema.deleteUser(userToBeDeleted);
+        const {success, err} = await userSchema.deleteUser(userToBeDeleted);
 
-        return res.json({success: success});
+        return res.json({success: success, err: err});
     }
 
     async hashPassword(password) {
@@ -74,6 +69,6 @@ class UserController {
 
 }
 
-const userController = new UserController(null, null);
+const userController = new UserController(null, userSchema);
 
 module.exports = userController;
