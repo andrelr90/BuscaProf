@@ -12,7 +12,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
-        <div id="main-image">
+        <div id="main-image" class="app">
             <div id="main-image-filter" class="d-flex align-items-center">
                 <div class="container text-center">
                     <form id="form"class="form-signin mx-auto w-25 shadow p-3 mb-5 bg-light rounded container">
@@ -21,39 +21,73 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="inputName" class="sr-only">Nome</label>
-                                <input type="name" id="inputName" class="form-control" placeholder="Nome Completo" required>
+                                <input type="name" id="inputName" class="form-control" placeholder="Nome Completo" ref="name" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="inputEmail" class="sr-only">Email</label>
-                                <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                                <input type="email" id="inputEmail" class="form-control" placeholder="Email" ref="email" required autofocus>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="inputPassword" class="sr-only">Senha</label>
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+                                <input type="password" id="inputPassword" class="form-control" placeholder="Senha" ref="password" required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="1">
+                                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" value="1" v-model="picked">
                                 <label class="custom-control-label" for="customRadioInline1">Professor</label>
                               </div>
                               <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="0">
+                                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" value="0" v-model="picked">
                                 <label class="custom-control-label" for="customRadioInline2">Aluno</label>
                               </div>
                         </div>
 
                         <hr>
-                        <button type="submit" class="btn btn-outline-secondary btn-block">Criar Conta</button>
+                        <button @click.prevent="getData()" type="submit" class="btn btn-outline-secondary btn-block">Criar Conta</button>
                       </form>
-
+                      Dados {{password}} , {{email}} , {{name}} , {{picked}}
                 </div>
             </div>
         </div>
+        <script>
+            new Vue({
+                el: '.app',
+                    data: {
+                        password: '',
+                        email: '',
+                        name: '',
+                        picked: null
+                        },
+                    methods: {
+                        async getData(){
+                            this.password = this.$refs.password.value
+                            this.email = this.$refs.email.value
+                            this.name = this.$refs.name.value
+                            const headers = new Headers();
+                                headers.append(
+                                    "Content-Type",
+                                    "application/json"
+                                );
+                            const request = new Request( "http://localhost:3000/register",
+                            {
+                                method: "POST",
+                                headers,
+                                body: JSON.stringify({email: this.email, password: this.password, name: this.name, professor: this.picked}),
+                                mode: "cors",
+                                cache: "default"
+                            }
+                        );      
+                        const res = await fetch(request);
+                        const response = await res.json();
+                        }
+                    }
+                })
+        </script>
 
         <footer id="sticky-footer fixed-bottom " class="py-4 bg-light text-secondary">
             <div class="container d-flex align-items-center" id="footer-inside">
