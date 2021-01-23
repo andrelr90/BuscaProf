@@ -38,7 +38,12 @@ footer {
 
 #main-image-filter{
   height: 100%;
-  background-color: rgba(50,50,50, 0.5);
+  background-color: rgba(50,50,50, 0.8);
+}
+
+#about-us{
+  max-width: 800px;
+  padding: 75px 0px 75px 0px;
 }
 
 @media only screen and (max-width: 600px) {
