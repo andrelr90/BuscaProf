@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="../backend/node_modules/vue/dist/vue.global.js"></script>
+        <link rel="stylesheet" href="./css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+        <div id="nav-vue">
+            <nav-vue></nav-vue>
+        </div>
+
+        <div class="container text-center" style="margin-top: 50px;">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nome" aria-label="Search" style="width:calc(100% - 167px);">
+                <button class="btn btn-outline-secondary my-2 mx-sm-2" data-toggle="modal" data-target="#exampleModal">Filtrar</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+              
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Disciplinas</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <form class="text-left">
+                        <div class="modal-body" id="subjects-filter">
+                        
+                            <div class="form-check" v-for="subject in subjects">
+                                <input type="checkbox" class="form-check-input" :id="`${subject}`">
+                                <label class="form-check-label" :for="`${subject}`">{{subject}}</label>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Aplicar filtro</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            
+
+            <div id="professor-list">
+                <div class="card" style="margin-bottom:10px;" v-for="professor in professors">
+                    <div class="card-body text-left">
+                        <div class="row">
+                            <div class="col-8 text-left">
+                                <h5 class="card-title">{{professor.name}}</h5>
+                            </div>
+                            <div class="col-4 text-right">
+                                R${{professor.price}} hora/aula
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 text-left">
+                                <span class="badge badge-secondary" style="margin-right:5px;" v-for="ps in professor.subjects">{{ps}}</span>
+                            </div>
+                            <div class="col-4 text-right">
+                                Avaliações: {{professor.grade}} / 5
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <a href="#">
+                        <div class="card-footer text-muted">
+                            Ver detalhes
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+           
+        <div id="footer-vue">
+            <footer-vue></footer-vue>
+        </div>
+
+        <script src="vue-components/nav.js"></script>
+        <script src="vue-components/footer.js"></script>
+
+        <script>
+            Vue.createApp({
+                data() {
+                    return {
+                        professors: [
+                            { name: 'Uncle Ducson', price: 20.00, grade: 3, subjects: ['Probabilidade', 'Estatística'] }, 
+                            { name: 'Marcos Augusto Costa Moreira', price: 45.00, grade: 4, subjects: ['Cálculo I', 'Cálculo II', 'EDC'] }
+                        ]
+                    }
+                }
+            }).mount('#professor-list');
+        </script>
+
+        <script>
+            Vue.createApp({
+                data() {
+                    return {
+                        subjects: ['Cálculo I', 'Cálculo II', 'EDC', 'Probabilidade', 'Estatística']
+                    }
+                }
+            }).mount('#subjects-filter');
+        </script>
+        
+    </body>
+
+</html>
