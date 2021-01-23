@@ -1,3 +1,5 @@
+const userController = require("./src/controller/UserController");
+
 let sessionConfig = (app, session) => {
     const SESSION_CONFIG = {secret: 'TESTE',
         resave: false,
@@ -15,21 +17,17 @@ let passportConfig = (app, passport, LocalStrategy) => {
             usernameField: "email",
             passwordField: "password"
         },
-        function(email, password, done) {
+        async function(email, password, done) {
 
             //const user = new User(email, password);
             
             console.log("PassportTest");
-            let userFound = true;
-            let err = false;
             let submittedPassword = password;
-            let user = {email: email, password: submittedPassword};
-            console.log("A")
-            console.log(user)
             const validPassword = true;
             
-            //const {user, userFound, validPassword, err} = UserController.findUserByEmail(user);
-            user.id = 1;
+            const {user, userFound, err} = await userController.getUserByEmail(email);
+            
+            // todo check password
 
             if (err) { 
                 return done(err); 
@@ -46,19 +44,19 @@ let passportConfig = (app, passport, LocalStrategy) => {
 
     passport.serializeUser((user, done) => {
         console.log("SerializeUser");
-        const cookie = {id: user.id, group: 'teste'};
+        const cookie = {id: user.id, name: user.email, group: 'teste'};
         done(null, cookie);
     });
 
-    passport.deserializeUser((user, done) => {
+    passport.deserializeUser(async (deserializedUser, done) => {
         console.log("DeserializeUser");
-        //const {userFound, user} = UserController.findUserbyId(id);
+        const {user, userFound, err} = await userController.getUserById(deserializedUser.id);
         console.log(user)
         const cookie = {
             id: user.id,
-            group: user.group
+            name: deserializedUser.name,
+            group: deserializedUser.group
         };
-        let userFound = true;
         console.log(cookie)
         if (userFound) {
             done(null, cookie)

@@ -34,23 +34,23 @@ class UserSchema {
     }
 
 
-    async getUserByEmail(email) {
+    async getUserByEmail(userToBeSearched) {
         //const query = `SELECT * FROM Users WHERE email = '${user.email}';`
 
         //const {user, userFound, err} = db.runSelectQuery(query);
-        const user = new User({id: 10});
-        const userFound = false;
+        const user = new User({email: userToBeSearched.email, id: 10});
+        const userFound = true;
         const err = null; 
         return {user: user, userFound: userFound, err: err};
     }
 
-    async getUserById(id) {
+    async getUserById(userToBeSearched) {
         //const query = `SELECT * FROM Users WHERE id = ${user.id};`
 
         //const {user, userFound, err} = db.runSelectQuery(query);
-        const user = new User({id: 10});
+        const user = new User({id: userToBeSearched.id, email: "teste"});
         const userFound = true;
-        const err = null; 
+        const err = null;
         return {user: user, userFound: userFound, err: err};
     }
 

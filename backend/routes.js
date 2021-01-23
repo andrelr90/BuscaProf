@@ -1,4 +1,5 @@
 const userController = require("./src/controller/UserController.js");
+const path = require("path")
 
 function passportLogin(passport) {
     return (req, res, next) => {
@@ -17,6 +18,7 @@ function passportLogin(passport) {
                     if (err) {
                         throw err;
                     }
+                    console.log("QQ")
                     res.send("Logged in")
                 })
             }
@@ -49,11 +51,11 @@ let setupRoutes = (app, passport) => {
         const teste = req.body.id;
         res.json({'TESTE': teste});
     });
-
+    app.get("/login", (req, res) => res.sendfile(path.resolve("wwwroot", '../../frontend/login.html')));
     app.post("/login", passportLogin(passport));
-
+    
     app.get("/logged", passportCheckLogin('teste'), (req, res) => {
-        res.send({id: req.user.id});
+        res.send(req.user);
     });
 
     app.post("/register", (req, res) => userController.createUser(req, res));
