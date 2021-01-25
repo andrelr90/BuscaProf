@@ -61,6 +61,8 @@ let setupRoutes = (app, passport) => {
     app.post("/register", (req, res) => userController.createUser(req, res));
 
     app.get("/logout", passportLogout());
+
+    app.post("/search", (req, res) => userController.searchUserByName(req, res));
 }
 
 module.exports = {setupRoutes};

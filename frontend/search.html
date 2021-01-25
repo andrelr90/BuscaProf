@@ -15,11 +15,11 @@
             <nav-vue></nav-vue>
         </div>
 
-        <div class="container text-center" style="margin-top: 50px;">
+        <div id="app" class="container text-center" style="margin-top: 50px;">
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nome" aria-label="Search" style="width:calc(100% - 167px);">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nome" aria-label="Search" style="width:calc(100% - 167px);" ref="name" required>
                 <button class="btn btn-outline-secondary my-2 mx-sm-2" data-toggle="modal" data-target="#exampleModal" type="button">Filtrar</button>
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="button">Buscar</button>
+                <button @click.prevent="getData()" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
             </form>
               
             
@@ -42,7 +42,7 @@
                             
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Aplicar filtro</button>
+                            <button @click.prevent="getData()" type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Aplicar filtro</button>
                         </div>
                     </div>
                     </form>
@@ -110,6 +110,36 @@
                     }
                 }
             }).mount('#subjects-filter');
+        </script>
+           <script>
+            Vue.createApp({
+                    data() {
+                        return {
+                            name: ''
+                        }
+                    },
+                    methods: {
+                        async getData(){
+                            this.name = this.$refs.name.value
+                            const headers = new Headers();
+                                headers.append(
+                                    "Content-Type",
+                                    "application/json"
+                                );
+                            const request = new Request( "http://localhost:3000/search",
+                            {
+                                method: "POST",
+                                headers,
+                                body: JSON.stringify({ name: this.name}),
+                                mode: "cors",
+                                cache: "default"
+                            }
+                        );      
+                        const res = await fetch(request);
+                        const response = await res.json();
+                        }
+                    }
+                }).mount('#app');
         </script>
         
     </body>

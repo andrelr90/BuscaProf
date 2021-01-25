@@ -79,6 +79,13 @@ class UserController {
         return {user, userFound, err};
     }
 
+    async searchUserByName(req,res) {
+        const userToBeSearched = new User({name: req.body.name});
+        const {user, userFound, err} = await this.userSchema.getUserByName(userToBeSearched)
+        
+        return res.json({user, userFound, err});
+    }
+
 }
 
 const userController = new UserController(null, userSchema, profDataSchema);

@@ -54,6 +54,16 @@ class UserSchema {
         return {user: user, userFound: userFound, err: err};
     }
 
+    async getUserByName(userToBeSearched) {
+        //const query = `SELECT * FROM Users WHERE name = ${user.name};`
+
+        //const {user, userFound, err} = db.runSelectQuery(query);
+        const user = new User({name: userToBeSearched.name, email: "teste"});
+        const userFound = true;
+        const err = null;
+        return {user: user, userFound: userFound, err: err};
+    }
+
 }
 
 const userSchema = new UserSchema();
