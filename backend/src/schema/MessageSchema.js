@@ -27,6 +27,7 @@ class MessageSchema {
     async getMessages(message) {
         const conn = await db.connect();
         const sql = "SELECT * FROM Messages WHERE idSender = ? OR idReceiver = ? OR idSender = ? OR idReceiver = ?";
+        const sqlSetNotifications = "UPDATE Messages SET status = 1 WHERE idSender = ? OR idReceiver = ? OR idSender = ? OR idReceiver = ?";
         const values = [message.idSender, message.idSender, message.idReceiver, message.idReceiver];
         
         let err = null;
@@ -34,6 +35,7 @@ class MessageSchema {
         let messages = null;
         try {
             const [rows, _] = await conn.execute(sql, values);
+            await conn.execute(sqlSetNotifications, values);
             if (rows.length > 0) {
                 messages = rows;
                 messageFound = true;
