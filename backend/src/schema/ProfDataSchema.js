@@ -27,15 +27,21 @@ class ProfDataSchema {
         const conn = await db.connect();
         const sql = "UPDATE ProfData SET description = ?, price = ? WHERE id = ?";
         const values = [prof.description, prof.price, prof.id];
-        const {success, err} = conn.query(sql, values);
-
+        let success = null;
+        let err = null;
+        try {
+            success = await conn.query(sql, values);
+        }
+        catch(error) {
+            err = error;
+        }
         //const query = `UPDATE ProfData
         //SET description = \"${prof.description}\", price = ${prof.price},
         //WHERE id = ${prof.id};`
         //const {success, err} = db.runQuery(query);
         //const success = true;
         //const err = null;
-
+        console.log(`UpdateProfData ${prof}`);
         db.disconnect(conn);
         return {success: success, err: err};
     }
@@ -43,13 +49,21 @@ class ProfDataSchema {
     async deleteProfData(prof) {
         const conn = await db.connect();
         const sql = "DELETE FROM ProfData WHERE id = ?";
-        const {success, err} = conn.query(sql, [prof.id]);
+        let success = null;
+        let err = null;
+        try {
+            success = await conn.query(sql, [prof.id]);
+        }
+        catch(error) {
+            err = error;
+        }
 
         //const query = `DELETE FROM ProfData WHERE id = ${prof.id};`
         //const {success, err} = db.runQuery(query);
         // const success = true;
         // const err = null;
 
+        console.log(`DeleteProfData ${prof}`);
         db.disconnect(conn); 
         return {success: success, err: err};
     }

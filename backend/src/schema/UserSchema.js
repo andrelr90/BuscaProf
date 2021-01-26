@@ -10,7 +10,7 @@ class UserSchema {
         const conn = await db.connect();
         const sql = "INSERT INTO Users (email, name, password, professor) VALUES (?,?,?,?)";
         const values = [user.email, user.name, user.password, user.professor];
-        let success = 0;
+        let success = null;
         let err = null;
         try {
             success = await conn.query(sql, values);
@@ -29,15 +29,17 @@ class UserSchema {
         const conn = await db.connect();
         const sql = "UPDATE Users SET email = ?, name = ?, password = ?, professor = ? WHERE id = ?";
         const values = [user.email, user.name, user. password, user.professor, user.id];
+        let success = null;
+        let err = null;
+        try {
+            success = await conn.query(sql, values);
+        }
+        catch(error) {
+            err = error;
+        }
 
-        const {success, err} = await conn.query(sql, values);
-        //const query = `UPDATE Users
-        //SET email = '${user.email}', name = '${user.name}', password = '${user.password}', professor = '${user.professor}',
-        //WHERE id = ${user.id};`
-        
-        //const {success, err} = db.runQuery(query);
-        //const success = true;
-        //const err = null;
+        console.log(success);
+        console.log(`UpdateUser ${user}`);
         db.disconnect(conn);
         return {success: success, err: err};
     }
@@ -45,12 +47,16 @@ class UserSchema {
     async deleteUser(user) {
         const conn = await db.connect();
         const sql = "DELETE FROM Users WHERE id = ?";
-        const {success, err} = await conn.query(sql, [user.id]);
-        //const query = `DELETE FROM Users WHERE id = ${user.id};`
-
-        //const {success, err} = db.runQuery(query);
-        //const success = true;
-        //const err = null; 
+        let success = null;
+        let err = null;
+        try {
+            success = await conn.query(sql, [user.id]);
+        }
+        catch(error) {
+            err = error;
+        }
+        console.log(success);
+        console.log(`DeleteUser ${user}`);
         db.disconnect(conn);
         return {success: success, err: err};
     }

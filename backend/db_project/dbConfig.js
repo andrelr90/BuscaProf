@@ -14,7 +14,7 @@ class Database{
 	
 	async createTables(){
 		const conn = await this.connect();
-		const createUsers = "CREATE TABLE IF NOT EXISTS Users (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100) NOT NULL, name VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, professor BOOLEAN NOT NULL DEFAULT FALSE)";
+		const createUsers = "CREATE TABLE IF NOT EXISTS Users (id INT AUTO_INCREMENT, email VARCHAR(100) NOT NULL, name VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, professor BOOLEAN NOT NULL DEFAULT FALSE, PRIMARY KEY (id, email))";
 		const createSubjects = "CREATE TABLE IF NOT EXISTS Subjects (code VARCHAR(6) NOT NULL PRIMARY KEY, subjectName VARCHAR(60) NOT NULL)";
 		const createProfData = "CREATE TABLE IF NOT EXISTS ProfData (id INT PRIMARY KEY, description VARCHAR(2000), price INT, FOREIGN KEY (id) REFERENCES Users (id) ON DELETE CASCADE)";
 		const createMessages = "CREATE TABLE IF NOT EXISTS Messages (idSender INT, idReceiver INT, time DATETIME, status BOOLEAN NOT NULL DEFAULT FALSE, text VARCHAR(2000), PRIMARY KEY (idSender, idReceiver, time), FOREIGN KEY (idSender) REFERENCES Users (id) ON DELETE CASCADE, FOREIGN KEY (idReceiver) REFERENCES Users (id) ON DELETE CASCADE)";
