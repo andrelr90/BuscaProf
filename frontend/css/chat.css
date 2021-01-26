@@ -21,9 +21,13 @@
     justify-content: center;
 }
 
+#chatPage{
+    display: none;
+}
 #chat{
-    height: auto;
-    width: auto;
+    height: 426px;
+    width: 90%;
+    max-width: 350px;
     /* display: inline-block; */
     background: white;
     box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
@@ -34,10 +38,15 @@
 
     display: none;
 }
+#headChat{
+    width: 90%;
+    margin: 5% 10px;
+    height: 20px;
+}
 .chat-area {
     background: white;
-    height: 40vh;
-    padding: 1em;
+    height: 300px;
+    padding: 12px;
     overflow: auto;
     max-width: 350px;
 }
@@ -50,6 +59,7 @@
     padding: .5em;
     /*   margin-bottom: .5em; */
     font-size: 13px;
+    overflow-wrap: break-word;
 }
 .message-out {
     background: #407FFF;
@@ -63,4 +73,39 @@
 .chat-inputs {
     display: flex;
     justify-content: space-between;
+    max-width: calc(100% - 85px);
+}
+#backButton{
+    float: left;
+    width: 25px;
+    cursor: pointer;
+}
+
+#contactScreen{
+    display: block;
+    height: 100%;
+}
+.contacts{
+    width: 90%;
+    margin: 0px 5%;
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+.contact{
+    height: 50px;
+    width: 90%;
+    margin: 0px;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    border-bottom: 1px solid #6c757d;
+    cursor: pointer;
+}
+#headContacts{
+    height: 50px;
+    width: 90%;
+    margin: 0px 5%;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
 }

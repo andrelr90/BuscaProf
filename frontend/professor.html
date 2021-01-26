@@ -21,17 +21,34 @@
 
 
         <main id="chat">
-                <section ref="chatArea" class="chat-area">
-                <p v-for="message in messages" class="message" :class="{ 'message-out': message.author === 'you', 'message-in': message.author !== 'you' }">
-                    {{ message.body }}
-                </p>
+            <section id="contactScreen" ref="contactScreen">
+                <section id="headContacts">
+                    Contatos:
+                </section>
+                <section class="contacts">
+                    <section class="contact" v-for="contact in contacts" @click="showMessageScreen(`${contact.name}`, `${contact.id}`)">
+                        {{contact.name}}
+                    </section>
+                    <br/>
+                </section>
             </section>
-        
-            <section class="chat-inputs">
-                <form @submit.prevent="sendMessage('out')" id="person1-form" style="display: contents;">
-                    <input v-model="youMessage" id="person1-input" type="text" class="form-control mr-sm-2">
-                    <button class="btn btn-outline-primary" type="submit">Enviar</button>
-                </form>
+            <section id="chatPage" ref="chatPage">
+                <section id="headChat">
+                    <div @click="showContactScreen()" id="backButton">&nbsp;&nbsp;&#60;</div>
+                    <div ref="contactName">Professor name</div>
+                </section>
+                <section ref="chatArea" class="chat-area">
+                    <p v-for="message in messages" class="message" :class="{ 'message-out': message.author === 'you', 'message-in': message.author !== 'you' }">
+                        {{ message.body }}
+                    </p>
+                </section>
+            
+                <section class="chat-inputs">
+                    <form @submit.prevent="sendMessage('out')" id="person1-form" style="display: contents;" autocomplete="off">
+                        <input v-model="youMessage" id="person1-input" type="text" class="form-control mr-sm-2">
+                        <button class="btn btn-outline-primary" type="submit">Enviar</button>
+                    </form>
+                </section>
             </section>
         </main>
 
@@ -52,15 +69,35 @@
     <script src="vue-components/footer.js"></script>
 
     <script>
+        function _get(key) {
+            var _name = key + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(_name) == 0) return c.substring(_name.length, c.length);
+            }
+            return null;
+        };
+
         Vue.createApp({
             data() {
                 return {
+                    contacts: [
+                        {name: "João da Silva Costa", id: 1}, 
+                        {name: "Manoel Carlinhos", id: 2}, 
+                        {name: "Uncle Ducson", id: 3},
+                    ],
                     bobMessage: '',
                     youMessage: '',
                     messages: [
                         {
-                            body: 'Deixe uma mensagem para me adicionar aos seus contatos',
+                            body: 'Teste',
                             author: 'professor'
+                        },
+                        {
+                            body: 'Teste2',
+                            author: 'you'
                         }
                     ]
                 }
@@ -73,6 +110,7 @@
                     if (direction === 'out') {
                         this.messages.push({body: this.youMessage, author: 'you'})
                         this.youMessage = ''
+                        // Also add to the database here.
                     } else {
                         alert('something went wrong')
                     }
@@ -80,8 +118,27 @@
                         let messageDisplay = this.$refs.chatArea
                         messageDisplay.scrollTop = messageDisplay.scrollHeight
                     })
+                },
+                loadContacts(){
+                    console.log("Loading contacts");
+                    // get contacts from the database here.
+                },
+                showContactScreen(){
+                    this.messages = [];
+                    this.$refs.contactScreen.style.display="block";
+                    this.$refs.chatPage.style.display="none";
+                },
+                showMessageScreen(name, id){
+                    // get messages for this id here. Use function _get to get the cookie with the logged user id.
+                    this.$refs.contactName.innerHTML = name;
+                    this.$refs.contactScreen.style.display="none";
+                    this.$refs.chatPage.style.display="block";
                 }
-            }
+            },
+            created() {
+                this.loadContacts();
+                this.interval = setInterval(() => this.loadContacts(), 3000);
+            },
         }).mount("#chat")
 
         Vue.createApp({
