@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="../backend/node_modules/vue/dist/vue.global.js"></script>
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/chat.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+        <div id="nav-vue">
+            <nav-vue></nav-vue>
+        </div>
+
+
+        
+
+
+        <main id="chat">
+                <section ref="chatArea" class="chat-area">
+                <p v-for="message in messages" class="message" :class="{ 'message-out': message.author === 'you', 'message-in': message.author !== 'you' }">
+                    {{ message.body }}
+                </p>
+            </section>
+        
+            <section class="chat-inputs">
+                <form @submit.prevent="sendMessage('out')" id="person1-form" style="display: contents;">
+                    <input v-model="youMessage" id="person1-input" type="text" class="form-control mr-sm-2">
+                    <button class="btn btn-outline-primary" type="submit">Enviar</button>
+                </form>
+            </section>
+        </main>
+
+        <div id="chatButton">
+            <div class="buttonContainer" @click="toggleChat()">
+                <img src="imagens/chat-icon.png" style="width: 60%" id="buttonChatIcon">
+            </div>
+        </div>
+
+
+        <div id="footer-vue">
+            <footer-vue></footer-vue>
+        </div>
+        
+    </body>
+
+    <script src="vue-components/nav.js"></script>
+    <script src="vue-components/footer.js"></script>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    bobMessage: '',
+                    youMessage: '',
+                    messages: [
+                        {
+                            body: 'Deixe uma mensagem para me adicionar aos seus contatos',
+                            author: 'professor'
+                        }
+                    ]
+                }
+            },
+            methods: {
+                sendMessage(direction) {
+                    if (!this.youMessage && !this.bobMessage) {
+                        return
+                    }
+                    if (direction === 'out') {
+                        this.messages.push({body: this.youMessage, author: 'you'})
+                        this.youMessage = ''
+                    } else {
+                        alert('something went wrong')
+                    }
+                    Vue.nextTick(() => {
+                        let messageDisplay = this.$refs.chatArea
+                        messageDisplay.scrollTop = messageDisplay.scrollHeight
+                    })
+                }
+            }
+        }).mount("#chat")
+
+        Vue.createApp({
+            data(){
+                return {
+                    isOpen: false
+                }
+            },
+            methods: {
+                toggleChat(){
+                    if(!this.isOpen){
+                        document.getElementById("chat").style.display = "inline-block";
+                        document.getElementById("buttonChatIcon").src = "imagens/chat-close.png";
+                    } else{
+                        document.getElementById("chat").style.display = "none";
+                        document.getElementById("buttonChatIcon").src = "imagens/chat-icon.png";
+                    }
+                    this.isOpen = !this.isOpen;
+                }
+            }
+        }).mount("#chatButton")
+    </script>
+
+</html>
