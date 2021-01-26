@@ -1,5 +1,5 @@
 const Message = require("../model/Message");
-//const messageSchema = require("../schema/MessageSchema");
+const messageSchema = require("../schema/MessageSchema");
 
 class MessageController {
     constructor(messageSchema) {
@@ -18,12 +18,28 @@ class MessageController {
 
     async getMessages(req, res) {
         const {idSender, idReceiver} = req.body;
-        const {messages, err} = await this.userSchema.getUserByEmail(userToBeSearched)
+        const message = new Message({idReceiver: idReceiver, idSender: idSender});
+        const {messages, messageFound, err} = await this.messageSchema.getMessages(message);
         
-        return {user, userFound, err};
+        return res.json({messages: messages, messageFound: messageFound, err: err});
     }
+
+    async getContacts(req, res) {
+        const {idSender} = req.body;
+        const id = new Message({idSender: idSender});
+        const {idContacts, contactFound, err} = await this.messageSchema.getContacts(id);
+        return res.json({idContacts: idContacts, contactFound: contactFound, err: err});
+    }
+
+    async getNotifications(req, res) {
+        const {idReceiver} = req.body;
+        const id = new Message({idReceiver: idReceiver});
+        const {idContacts, notificationFound, err} = await this.messageSchema.getNotifications(id);
+        return res.json({idContacts: idContacts, notificationFound: notificationFound, err: err});
+    }
+
 }
 
-const userController = new UserController(null, userSchema, profDataSchema);
+const messageController = new MessageController(messageSchema);
 
-module.exports = userController;
+module.exports = messageController;

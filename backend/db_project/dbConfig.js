@@ -26,6 +26,8 @@ class Database{
 		conn.query(createProfData);
 		conn.query(createMessages);
 
+		conn.query("INSERT INTO Users (email, name, password, professor) VALUES ('teste@teste', 'teste', 'teste', 0)")
+
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC203', 'Programação e Desenvolvimento de Software I')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC638', 'Introdução à Lógica Computacional')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT038', 'Geometria Analitica e Algebra Linear')");

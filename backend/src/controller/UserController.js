@@ -2,7 +2,6 @@ const ProfData = require('../model/ProfData');
 const User = require('../model/User')
 //const hashService = require('../util/cryptService')
 const userSchema = require("../schema/UserSchema");
-const profSchema = require("../schema/ProfDataSchema");
 const profDataSchema = require('../schema/ProfDataSchema');
 
 class UserController {
@@ -29,8 +28,13 @@ class UserController {
             //todo check error
         }
         console.log(newUser)
-
-        return res.json({success: success, err: err});
+        if (success) {
+            res.redirect("/");
+        }
+        else {
+            return res.json({success: success, err: err});
+        }
+        
     }
 
     async updateUser(req, res) {

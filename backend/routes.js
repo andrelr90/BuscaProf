@@ -1,5 +1,6 @@
 const userController = require("./src/controller/UserController.js");
-const path = require("path")
+const path = require("path");
+const messageController = require("./src/controller/MessageController.js");
 
 function passportLogin(passport) {
     return (req, res, next) => {
@@ -7,6 +8,7 @@ function passportLogin(passport) {
             
             console.log("PassportLogin");
             console.log(info);
+            console.log(user)
             if (err) {
                 throw err;
             }
@@ -19,7 +21,7 @@ function passportLogin(passport) {
                         throw err;
                     }
                     console.log("QQ")
-                    res.send("Logged in")
+                    res.redirect("/")
                 })
             }
         })(req, res, next);
@@ -51,15 +53,19 @@ let setupRoutes = (app, passport) => {
         const teste = req.body.id;
         res.json({'TESTE': teste});
     });
-    app.get("/login", (req, res) => res.sendfile(path.resolve("wwwroot", '../../frontend/login.html')));
+    app.get("/login", (req, res) => res.sendFile(path.resolve("wwwroot", '../../frontend/login.html')));
     app.post("/login", passportLogin(passport));
     
-    app.get("/logged", passportCheckLogin('teste'), (req, res) => {
+    app.get("/logged", passportCheckLogin(0), (req, res) => {
         res.send(req.user);
     });
 
     app.post("/register", (req, res) => userController.createUser(req, res));
 
+    app.post("/sendMessage", (req, res) => messageController.sendMessage(req, res));
+    app.post("/getNotifications", (req, res) => messageController.getNotifications(req, res))
+    app.post("/getMessages", (req, res) => messageController.getMessages(req, res));
+    app.post("/getContacts", (req, res) => messageController.getContacts(req, res));
     app.get("/logout", passportLogout());
 
     app.post("/search", (req, res) => userController.searchUserByName(req, res));
