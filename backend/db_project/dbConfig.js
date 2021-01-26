@@ -1,24 +1,24 @@
 class Database{
-	Constructor(){}
+	constructor(){}
 
 	async createDatabase(){
 		const mysqlCreate = require("mysql2");
 		const conn = mysqlCreate.createConnection({
 			host:'localhost',
 			user: 'root',
-			password: 'trebla321'
+			password: 'a'
 		});
-		conn.query("CREATE DATABASE EngSoftDB");
+		conn.query("CREATE DATABASE IF NOT EXISTS EngSoftDB");
 		conn.end();
 	}
 	
 	async createTables(){
-		const conn = await connect();
-		const createUsers = "CREATE TABLE Users (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100) NOT NULL, name VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, professor BOOLEAN NOT NULL DEFAULT FALSE)";
-		const createSubjects = "CREATE TABLE Subjects (code VARCHAR(6) NOT NULL PRIMARY KEY, subjectName VARCHAR(60) NOT NULL)";
-		const createProfData = "CREATE TABLE ProfData (id INT PRIMARY KEY, description VARCHAR(2000), price INT, FOREIGN KEY (id) REFERENCES Users (id) ON DELETE CASCADE)";
-		const createMessages = "CREATE TABLE Messages (idSender INT, idReceiver INT, time DATETIME, status BOOLEAN NOT NULL DEFAULT FALSE, text VARCHAR(2000), PRIMARY KEY (idSender, idReceiver, time), FOREIGN KEY (idSender) REFERENCES Users (id) ON DELETE CASCADE, FOREIGN KEY (idReceiver) REFERENCES Users (id) ON DELETE CASCADE)";
-		const createSubProf = "CREATE TABLE SubProf (professor INT, subject VARCHAR(6), FOREIGN KEY (professor) REFERENCES Users (id) ON DELETE CASCADE, FOREIGN KEY (subject) REFERENCES Subjects (code) ON DELETE CASCADE	)";
+		const conn = await this.connect();
+		const createUsers = "CREATE TABLE IF NOT EXISTS Users (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100) NOT NULL, name VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, professor BOOLEAN NOT NULL DEFAULT FALSE)";
+		const createSubjects = "CREATE TABLE IF NOT EXISTS Subjects (code VARCHAR(6) NOT NULL PRIMARY KEY, subjectName VARCHAR(60) NOT NULL)";
+		const createProfData = "CREATE TABLE IF NOT EXISTS ProfData (id INT PRIMARY KEY, description VARCHAR(2000), price INT, FOREIGN KEY (id) REFERENCES Users (id) ON DELETE CASCADE)";
+		const createMessages = "CREATE TABLE IF NOT EXISTS Messages (idSender INT, idReceiver INT, time DATETIME, status BOOLEAN NOT NULL DEFAULT FALSE, text VARCHAR(2000), PRIMARY KEY (idSender, idReceiver, time), FOREIGN KEY (idSender) REFERENCES Users (id) ON DELETE CASCADE, FOREIGN KEY (idReceiver) REFERENCES Users (id) ON DELETE CASCADE)";
+		const createSubProf = "CREATE TABLE IF NOT EXISTS SubProf (professor INT, subject VARCHAR(6), FOREIGN KEY (professor) REFERENCES Users (id) ON DELETE CASCADE, FOREIGN KEY (subject) REFERENCES Subjects (code) ON DELETE CASCADE	)";
 
 		conn.query(createUsers);
 		conn.query(createSubjects);
@@ -58,15 +58,15 @@ class Database{
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC637', 'Computação e Sociedade')");
 
 		conn.end();
-}
+	}
 
 	async connect(){
 		const mysql = require("mysql2/promise");
-		const connection = await mysql.createConnection("mysql://root:trebla321@localhost:3306/EngSoftDB");
+		const connection = await mysql.createConnection("mysql://root:a@localhost:3306/EngSoftDB");
 		return connection;
 	}
 
-	async disconcect(conn){
+	async disconnect(conn){
 		conn.end();
 	}
 
