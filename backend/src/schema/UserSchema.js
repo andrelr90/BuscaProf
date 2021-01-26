@@ -54,7 +54,7 @@ class UserSchema {
     async getUserByEmail(userToBeSearched) {
         const conn = await db.connect();
         const sql = "SELECT * FROM Users WHERE email = ?";
-        const {user, userFound, err} = conn.query(sql, [userToBeSearched.email]);
+        const {[[user]], userFound, err} = conn.query(sql, [userToBeSearched.email]);
         //const query = `SELECT * FROM Users WHERE email = '${user.email}';`
 
         //const {user, userFound, err} = db.runSelectQuery(query);
@@ -68,7 +68,7 @@ class UserSchema {
     async getUserById(userToBeSearched) {
         const conn = await db.connect();
         const sql = "SELECT * FROM Users WHERE id = ?";
-        const {user, userFound, err} = conn.query(sql, [userToBeSearched.id]);
+        const {[[user]], userFound, err} = conn.query(sql, [userToBeSearched.id]);
         //const query = `SELECT * FROM Users WHERE id = ${user.id};`
 
         //const {user, userFound, err} = db.runSelectQuery(query);
@@ -82,7 +82,7 @@ class UserSchema {
     async getUserByName(userToBeSearched) {
         const conn = await db.connect();
         const sql = "SELECT * FROM Users WHERE name = ?";
-        const {user, userFound, err} = conn.query(sql, [userToBeSearched.name]);
+        const {[[user]], userFound, err} = conn.query(sql, [userToBeSearched.name]);
 
         //const query = `SELECT * FROM Users WHERE name = ${user.name};`
 
