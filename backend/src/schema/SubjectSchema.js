@@ -1,4 +1,4 @@
-const User = require('../model/Subjects')
+const Subject = require('../model/Subjects')
 const Database = require ('../../db_project/dbConfig');
 const db = new Database();
 
