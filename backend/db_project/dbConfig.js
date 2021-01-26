@@ -12,7 +12,7 @@ class Database{
 		conn.end();
 	}
 	
-	async function createTables(){
+	async createTables(){
 		const conn = await connect();
 		const createUsers = "CREATE TABLE Users (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(100) NOT NULL, name VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, professor BOOLEAN NOT NULL DEFAULT FALSE)";
 		const createSubjects = "CREATE TABLE Subjects (code VARCHAR(6) NOT NULL PRIMARY KEY, subjectName VARCHAR(60) NOT NULL)";
