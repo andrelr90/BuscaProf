@@ -17,6 +17,16 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
+(async function() {
+    
+    const Database = require("./db_project/dbConfig")
+    const db = new Database();
+    await db.createDatabase();
+    await db.createTables();
+    
+  })()
+
+
 sessionConfig(app, session);
 passportConfig(app, passport, LocalStrategy);
 
