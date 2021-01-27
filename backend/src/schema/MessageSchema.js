@@ -79,8 +79,8 @@ class MessageSchema {
 
     async getContacts(message) {
         const conn = await db.connect();
-        const sql = "SELECT M.idSender, M.idReceiver, S.name as nameSender, R.name as nameReceiver FROM Messages M JOIN Users S ON M.idSender = S.id OR M.idReceiver = S.id JOIN Users R ON M.idSender = R.id OR M.idReceiver = R.id WHERE (M.idSender = ? OR M.idReceiver = ?)";
-        const values = [message.idSender, message.idSender, message.idReceiver, message.idSender];
+        const sql = "SELECT M.idSender, M.idReceiver, S.name as Sender, R.name as Receiver FROM ((Messages M JOIN Users S ON M.idSender = S.id) JOIN Users R ON M.idReceiver = R.id) WHERE (M.idSender = ? OR M.idReceiver = ?);";
+        const values = [message.idSender, message.idSender];
         
         let err = null;
         let contactFound = false;
