@@ -41,7 +41,7 @@ class MessageSchema {
                 messageFound = true;
             }
             for(const index in messages){
-            	if(messages[index].id = message.idSender){
+            	if(messages[index].id == message.idSender){
             		messages[index].author = "You";
             	}
             }
