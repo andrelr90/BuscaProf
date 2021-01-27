@@ -26,7 +26,7 @@ class MessageSchema {
 
     async getMessages(message) {
         const conn = await db.connect();
-        const sql = "SELECT * FROM Messages WHERE idSender = ? OR idReceiver = ? OR idSender = ? OR idReceiver = ?";
+        const sql = "SELECT * FROM Messages M JOIN Users U ON M.idSender = U.id WHERE M.idSender = ? OR M.idReceiver = ? OR M.idSender = ? OR M.idReceiver = ?";
         const sqlSetNotifications = "UPDATE Messages SET status = 1 WHERE idSender = ? OR idReceiver = ? OR idSender = ? OR idReceiver = ?";
         const values = [message.idSender, message.idSender, message.idReceiver, message.idReceiver];
         
