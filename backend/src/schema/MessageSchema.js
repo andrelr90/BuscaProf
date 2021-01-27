@@ -26,7 +26,7 @@ class MessageSchema {
 
     async getMessages(message) {
         const conn = await db.connect();
-        const sql = "SELECT M.text, U.name, DATE_FORMAT(M.time, '%d/%l/%Y %h:%i:%s') as time FROM Messages M JOIN Users U ON M.idSender = U.id WHERE (M.idSender = ? AND M.idReceiver = ?) OR (M.idSender = ? AND M.idReceiver = ?)";
+        const sql = "SELECT M.idSender AS id, M.text AS body, U.name AS author, DATE_FORMAT(M.time, '%d/%m/%Y %h:%i:%s') as time FROM Messages M JOIN Users U ON M.idSender = U.id WHERE (M.idSender = ? AND M.idReceiver = ?) OR (M.idSender = ? AND M.idReceiver = ?)";
         const sqlSetNotifications = "UPDATE Messages SET status = 1 WHERE idSender = ? OR idReceiver = ? OR idSender = ? OR idReceiver = ?";
         const values = [message.idSender, message.idReceiver, message.idReceiver, message.idSender];
         
@@ -39,6 +39,11 @@ class MessageSchema {
             if (rows.length > 0) {
                 messages = rows;
                 messageFound = true;
+            }
+            for(const index in messages){
+            	if(messages[index].id = message.idSender){
+            		messages[index].author = "You";
+            	}
             }
         }
         catch(error) {
