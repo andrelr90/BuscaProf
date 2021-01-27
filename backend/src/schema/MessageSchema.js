@@ -79,7 +79,7 @@ class MessageSchema {
 
     async getContacts(message) {
         const conn = await db.connect();
-        const sql = "SELECT idSender, idReceiver FROM Messages WHERE idSender = ? OR idReceiver = ? OR idSender = ? OR idReceiver = ?";
+        const sql = "SELECT M.idSender, M.idReceiver, S.name as nameSender, R.name as nameReceiver FROM Messages M JOIN Users S ON M.idSender = S.id OR M.idReceiver = S.id JOIN Users R ON M.idSender = R.id OR M.idReceiver = R.id WHERE M.idSender = ? OR M.idReceiver = ? OR M.idSender = ? OR M.idReceiver = ?";
         const values = [message.idSender, message.idSender, message.idSender, message.idSender];
         
         let err = null;
@@ -94,11 +94,13 @@ class MessageSchema {
                 for (let row of rows) {
                     let idSender = row.idSender;
                     let idReceiver = row.idReceiver;
+                    let nameSender = nameSender;
+                    let nameReceiver = nameReceiver;
                     if (idSender != message.idSender) {
-                        set.add(idSender);
+                        set.add({id idSender, name: nameSender});
                     }
                     if (idReceiver != message.idSender) {
-                        set.add(idReceiver);
+                        set.add(id: idReceiver, name: nameReceiver);
 
                     }
                 }
