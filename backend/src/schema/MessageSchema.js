@@ -99,8 +99,8 @@ class MessageSchema {
                 for (let row of rows) {
                     let idSender = row.idSender;
                     let idReceiver = row.idReceiver;
-                    let nameSender = row.nameSender;
-                    let nameReceiver = row.nameReceiver;
+                    let nameSender = row.Sender;
+                    let nameReceiver = row.Receiver;
                     if (idSender != message.idSender) {
                         set.add(JSON.stringify({id: idSender, name: nameSender}));
                     }
