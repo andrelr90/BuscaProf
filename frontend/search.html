@@ -15,7 +15,7 @@
             <nav-vue></nav-vue>
         </div>
 
-        <div id="app" class="container text-center" style="margin-top: 50px;">
+        <div class="container text-center" style="margin-top: 50px;" id="app">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nome" aria-label="Search" style="width:calc(100% - 167px);" ref="name" required>
                 <button class="btn btn-outline-secondary my-2 mx-sm-2" data-toggle="modal" data-target="#exampleModal" type="button">Filtrar</button>
@@ -33,16 +33,15 @@
                             </button>
                         </div>
                     <form class="text-left">
-                        <div class="modal-body" id="subjects-filter">
+                        <div class="modal-body">
                         
                             <div class="form-check" v-for="subject in subjects">
-                                <input type="checkbox" class="form-check-input" :id="`${subject}`">
+                                <input type="checkbox" class="form-check-input" :id="`${subject}`" v-model="selectedSubs" :value="`${subject}`">
                                 <label class="form-check-label" :for="`${subject}`">{{subject}}</label>
                             </div>
-                            
                         </div>
                         <div class="modal-footer">
-                            <button @click.prevent="getData()" type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Aplicar filtro</button>
+                            <button @click.prevent="filter()" type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Aplicar filtro</button>
                         </div>
                     </div>
                     </form>
@@ -50,7 +49,7 @@
             </div>
             
 
-            <div id="professor-list">
+            <div>
                 <div class="card" style="margin-bottom:10px;" v-for="professor in professors">
                     <div class="card-body text-left">
                         <div class="row">
@@ -95,7 +94,7 @@
                     return {
                         professors: [
                             { name: 'Uncle Ducson', price: 20.00, grade: 3, subjects: ['Probabilidade', 'Estatística'] }, 
-                            { name: 'Marcos Augusto Costa Moreira', price: 45.00, grade: 4, subjects: ['Cálculo I', 'Cálculo II', 'EDC'] }
+                            { name: 'Marcos Augusto Costa Moreira', price: 45.00, grade: 4, subjects: ['Calculo Diferencial e Integral I', 'Calculo Diferencial e Integral II', 'Equações Diferenciais C'] }
                         ]
                     }
                 }
@@ -106,7 +105,19 @@
             Vue.createApp({
                 data() {
                     return {
-                        subjects: ['Cálculo I', 'Cálculo II', 'EDC', 'Probabilidade', 'Estatística']
+                        subjects: ['Programação e Desenvolvimento de Software I','Introdução à Lógica Computacional','Geometria Analitica e Algebra Linear',
+                                    'Programação e Desenvolvimento de Software II', 'Matemática Discreta', 'Álgebra Linear Computacional', 'Calculo Diferencial e Integral I',
+                                    'Introdução a Banco de Dados', 'Introdução a Sistemas Logicos', 'Estruturas de Dados', 'Probabilidade', 'Calculo Diferencial e Integral II',
+                                    'Organização de Computadores I', 'Fundamentos da Teoria da Computação', 'Algoritmos I', 'Introdução à Ciência dos Dados',
+                                    'Algebra A', 'Linguagens de Programação', 'Pesquisa Operacional', 'Algoritmos II', 'Equações Diferenciais C', 'Compiladores I',
+                                    'Engenharia de Software', 'Sistemas Operacionais', 'Introdução à Fisica Estatistica Computacional', 'Redes de Computadores',
+                                    'Etica na Computação', 'Fundamentos de Sistemas Paralelos e Distribuidos', 'Introdução à Inteligência Artificial', 'Computação e Sociedade'],
+                        selectedSubs: []
+                    }
+                },
+                methods:{
+                    async filter(){
+                        
                     }
                 }
             }).mount('#subjects-filter');
@@ -115,7 +126,19 @@
             Vue.createApp({
                     data() {
                         return {
-                            name: ''
+                            professors: [
+                            { name: 'Uncle Ducson', price: 20.00, grade: 3, subjects: ['Probabilidade', 'Estatística'] }, 
+                            { name: 'Marcos Augusto Costa Moreira', price: 45.00, grade: 4, subjects: ['Calculo Diferencial e Integral I', 'Calculo Diferencial e Integral II', 'Equações Diferenciais C'] }
+                        ],
+                        subjects: ['Programação e Desenvolvimento de Software I','Introdução à Lógica Computacional','Geometria Analitica e Algebra Linear',
+                                    'Programação e Desenvolvimento de Software II', 'Matemática Discreta', 'Álgebra Linear Computacional', 'Calculo Diferencial e Integral I',
+                                    'Introdução a Banco de Dados', 'Introdução a Sistemas Logicos', 'Estruturas de Dados', 'Probabilidade', 'Calculo Diferencial e Integral II',
+                                    'Organização de Computadores I', 'Fundamentos da Teoria da Computação', 'Algoritmos I', 'Introdução à Ciência dos Dados',
+                                    'Algebra A', 'Linguagens de Programação', 'Pesquisa Operacional', 'Algoritmos II', 'Equações Diferenciais C', 'Compiladores I',
+                                    'Engenharia de Software', 'Sistemas Operacionais', 'Introdução à Fisica Estatistica Computacional', 'Redes de Computadores',
+                                    'Etica na Computação', 'Fundamentos de Sistemas Paralelos e Distribuidos', 'Introdução à Inteligência Artificial', 'Computação e Sociedade'],
+                        selectedSubs: [],
+                        name: ''
                         }
                     },
                     methods: {
@@ -137,7 +160,10 @@
                         );      
                         const res = await fetch(request);
                         const response = await res.json();
-                        }
+                        },
+                        async filter(){
+                            
+                        } 
                     }
                 }).mount('#app');
         </script>
