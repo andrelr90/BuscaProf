@@ -7,8 +7,8 @@ class MessageController {
     }
     
     async sendMessage(req, res) {
-        const {idSender, idReceiver, text} = req.body;
-        //const time = getTime;
+        const {idReceiver, text} = req.body;
+        const idSender = req.user.id;
         const time = 0;
         const newMessage = new Message({idSender: idSender, idReceiver: idReceiver, time: time, status: false, text: text});
         const {success, err} = await this.messageSchema.sendMessage(newMessage);
@@ -17,7 +17,8 @@ class MessageController {
     }
 
     async getMessages(req, res) {
-        const {idSender, idReceiver} = req.body;
+        const {idReceiver} = req.body;
+        const idSender = req.user.id;
         const message = new Message({idReceiver: idReceiver, idSender: idSender});
         const {messages, messageFound, err} = await this.messageSchema.getMessages(message);
         
@@ -25,10 +26,13 @@ class MessageController {
     }
 
     async getContacts(req, res) {
-        const {idSender} = req.body;
+        const idSender = req.user.id;
         const id = new Message({idSender: idSender});
         const {idContacts, contactFound, err} = await this.messageSchema.getContacts(id);
+        
+        console.log(req.user)
         return res.json({idContacts: idContacts, contactFound: contactFound, err: err});
+
     }
 
     async getNotifications(req, res) {

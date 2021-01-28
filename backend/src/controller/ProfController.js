@@ -8,8 +8,8 @@ class ProfController {
 
     async updateProf(req, res) {
         console.log(req.body)
-        const {id, description, price} = req.body;
-
+        const {description, price} = req.body;
+        const id = req.user.id;
         const profToBeUpdated = new ProfData({id: id, description: description, price: price})
         const  {success, err} = await this.profSchema.updateProfData(profToBeUpdated);
         
@@ -17,7 +17,8 @@ class ProfController {
     }
 
     async updateProfSubject(req, res) {
-        const {id, subjects} = req.body;
+        const {subjects} = req.body;
+        const id = req.user.id;
         const userToBeDeleted = new User({id: id})
         const {success, err} = await this.profSchema.deleteUser(userToBeDeleted);
 
@@ -41,6 +42,6 @@ class ProfController {
 
 }
 
-const userController = new UserController(null, userSchema, profDataSchema);
+const profController = new ProfController(profDataSchema);
 
-module.exports = userController;
+module.exports = profController;

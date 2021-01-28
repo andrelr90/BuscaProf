@@ -38,9 +38,8 @@ class UserController {
     }
 
     async updateUser(req, res) {
-        console.log(req.body)
-        const {id, password, name, professor} = req.body;
-
+        const {password, name, professor} = req.body;
+        const id = req.user.id;
         const hashedPassword = await this.hashPassword(password);
         console.log(hashedPassword);
         const userToBeUpdated = new User({id: id, password: hashedPassword, name: name, professor: professor})
@@ -50,7 +49,7 @@ class UserController {
     }
 
     async deleteUser(req, res) {
-        const {id} = req.body;
+        const {id} = req.user.id;
         const userToBeDeleted = new User({id: id})
         const {success, err} = await this.userSchema.deleteUser(userToBeDeleted);
 
