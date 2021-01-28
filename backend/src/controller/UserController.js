@@ -35,7 +35,7 @@ class UserController {
         }
         console.log(newUser)
         if (success) {
-            res.redirect("/");
+            res.redirect("/login");
         }
         else {
             return res.json({success: success, err: err});

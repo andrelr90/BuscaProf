@@ -82,7 +82,15 @@
                             }
                         );      
                         const res = await fetch(request);
-                        const response = await res.json();
+                        //const response = await res.json();
+                        if(res["redirected"] == true){
+                            alert("Conta criada com sucesso!");
+                            window.location = res["url"];
+                        } else {
+                            const response = await res.json();
+                            alert(response["err"])
+                            window.location = "//localhost:3000/registro.html";
+                        }
                         }
                     }
                 })
