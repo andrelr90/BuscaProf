@@ -114,9 +114,9 @@ class UserSchema {
         return {user: user, userFound: userFound, err: err};
     }
 
-    async getUserByName(userToBeSearched) {
+    async getProfByName(userToBeSearched) {
         const conn = await db.connect();
-        const sql = "SELECT * FROM Users WHERE name = ?";
+        const sql = "SELECT * FROM Users WHERE name = ? AND professor = 1";
         let err = null;
         let userFound = false;
         let users = null;
@@ -128,7 +128,7 @@ class UserSchema {
             }
         }
         catch(error) {
-
+            err = error;
         }
 
         db.disconnect(conn);

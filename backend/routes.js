@@ -69,7 +69,7 @@ let setupRoutes = (app, passport) => {
     app.post("/getContacts", (req, res) => messageController.getContacts(req, res));
     app.get("/logout", passportLogout());
 
-    app.post("/search", (req, res) => userController.searchUserByName(req, res));
+    app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));
 }
 
 module.exports = {setupRoutes};
