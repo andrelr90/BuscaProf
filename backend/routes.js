@@ -53,7 +53,8 @@ let setupRoutes = (app, passport) => {
         const teste = req.body.id;
         res.json({'TESTE': teste});
     });
-    app.get("/login", (req, res) => res.sendFile(path.resolve("wwwroot", '../../frontend/login.html')));
+    //app.get("/login", (req, res) => res.sendFile(path.resolve("wwwroot", '../../frontend/login.html')));
+    //app.get("/professor", (req, res) => res.sendFile(path.resolve("wwwroot", '../../frontend/login.html')));
     app.post("/login", passportLogin(passport));
     
     app.get("/logged", passportCheckLogin(0), (req, res) => {
