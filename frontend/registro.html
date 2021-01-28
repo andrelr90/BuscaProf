@@ -89,7 +89,8 @@
                         } else {
                             const response = await res.json();
                             alert(response["err"])
-                            window.location = "//localhost:3000/registro.html";
+                            this.$refs.password.value = ''
+                            this.$refs.email.value = ''
                         }
                         }
                     }

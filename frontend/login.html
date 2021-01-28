@@ -64,7 +64,7 @@
                             window.location = res["url"];
                         } else {
                             alert("Email não cadastrado ou senha incorreta");
-                            window.location = res["url"];
+                            this.$refs.password.value = ''
                         }
                     }
                 }
