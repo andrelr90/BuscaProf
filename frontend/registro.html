@@ -15,7 +15,7 @@
         <div id="main-image-without-footer" class="app">
             <div id="main-image-filter" class="d-flex align-items-center">
                 <div class="container text-center">
-                    <form id="form"class="form-signin mx-auto w-25 shadow p-3 mb-5 bg-light rounded container">
+                    <form id="form"class="form-signin mx-auto w-25 shadow p-3 mb-5 bg-light rounded container" v-on:submit.prevent="getData()">
                         <h1 class="text-secondary">BuscaProf</h1>
                         <h1 class="h3 mb-3 font-weight-normal text-secondary">Criar Conta</h1>
                         <div class="form-row">
@@ -48,7 +48,7 @@
                         </div>
 
                         <hr>
-                        <button @click.prevent="getData()" type="submit" class="btn btn-outline-secondary btn-block">Criar Conta</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-block">Criar Conta</button>
                       </form>
                 </div>
             </div>
@@ -67,6 +67,7 @@
                             this.password = this.$refs.password.value
                             this.email = this.$refs.email.value
                             this.name = this.$refs.name.value
+                           
                             const headers = new Headers();
                                 headers.append(
                                     "Content-Type",
@@ -89,8 +90,6 @@
                         } else {
                             const response = await res.json();
                             alert(response["err"])
-                            this.$refs.password.value = ''
-                            this.$refs.email.value = ''
                         }
                         }
                     }

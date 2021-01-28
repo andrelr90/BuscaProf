@@ -15,7 +15,7 @@
         <div id="main-image-without-footer" class="app">
             <div id="main-image-filter" class="d-flex align-items-center">
                 <div class="container text-center">
-                    <form id="form"class="form-signin mx-auto w-25 shadow p-3 mb-5 bg-light rounded container">
+                    <form id="form"class="form-signin mx-auto w-25 shadow p-3 mb-5 bg-light rounded container" v-on:submit.prevent="getData()">
                         <h1 class="text-secondary">BuscaProf</h1>
                         <h1 class="h3 mb-3 font-weight-normal text-secondary">Por favor, entre</h1>
                         <label for="inputEmail" class="sr-only">Email</label>
@@ -24,7 +24,7 @@
                         <label for="inputPassword" class="sr-only">Senha</label>
                         <input type="password" id="inputPassword" class="form-control" placeholder="Senha" ref="password" required>
                         <br>
-                        <button @click.prevent="getData()" class="btn btn-lg btn-outline-secondary btn-block" type="button">Entrar</button>
+                        <button class="btn btn-lg btn-outline-secondary btn-block" type="submit">Entrar</button>
                         <hr>
                         <a class="btn btn-outline-secondary btn-block" href="registro.html" role="button">Criar Conta</a>
                       </form>
