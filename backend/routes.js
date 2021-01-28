@@ -46,7 +46,7 @@ function passportLogout() {
     return (req, res, next) => {
         console.log("PassportLogout");
         req.logout();
-        res.redirect('/');
+        res.redirect('/login');
     }
 }
 

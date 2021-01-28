@@ -18,10 +18,17 @@ nav.component('nav-vue', {
                         </li>
                 </ul>
                 <form class="form-inline my-2 my-md-0">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Sair</button>
+                    <button @click.prevent="logout()" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Sair</button>
                 </form>
             </div>
-        </nav>`
+        </nav>`,
+        methods:{
+            async logout(){
+                const request = new Request( "http://localhost:3000/logout");
+                const res = await fetch(request);
+                window.location = res["url"];
+            }
+        }
 });
 
 nav.mount('#nav-vue');
