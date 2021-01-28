@@ -93,7 +93,8 @@
                             author: 'You',
                             time: 'd/m/aa h:m:s'
                         }
-                    ]
+                    ],
+                    intervalLoadMessage: null
                 }
             },
             methods: {
@@ -153,15 +154,17 @@
                     );
                     const res = await fetch(request);
                     const response = await res.json();
+                    console.log(response)
                     this.contacts = response['idContacts'];
                 },
                 showContactScreen(){
                     this.messages = [];
+                    clearInterval(this.intervalLoadMessage);
                     this.$refs.contactScreen.style.display="block";
                     this.$refs.chatPage.style.display="none";
                 },
 
-                async getMessages(id){
+                async getMessages(id, scroll=false){
                     console.log("Loading messsages from "+id);
 
                     const headers = new Headers();
@@ -181,14 +184,16 @@
                     const res = await fetch(request);
                     const response = await res.json();
                     this.messages = response['messages'];
-
-                    Vue.nextTick(() => {
-                        let messageDisplay = this.$refs.chatArea
-                        messageDisplay.scrollTop = messageDisplay.scrollHeight
-                    })
+                    if(scroll)
+                        Vue.nextTick(() => {
+                            console.log("aqui");
+                            let messageDisplay = this.$refs.chatArea
+                            messageDisplay.scrollTop = messageDisplay.scrollHeight
+                        })
                 },
                 showMessageScreen(name, id){
-                    this.getMessages(id);
+                    this.getMessages(id, true);
+                    this.intervalLoadMessage = setInterval(() => this.getMessages(id), 1000);
                     this.contactId = id;
                     this.$refs.contactName.innerHTML = name;
                     this.$refs.contactScreen.style.display="none";
