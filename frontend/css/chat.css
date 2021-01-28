@@ -39,9 +39,18 @@
     display: none;
 }
 #headChat{
+    height: 50px;
     width: 90%;
-    margin: 5% 10px;
-    height: 20px;
+    margin: 0px 5%;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+}
+#contactName{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
 }
 .chat-area {
     background: white;
@@ -73,7 +82,10 @@
 .chat-inputs {
     display: flex;
     justify-content: space-between;
+}
+#person1-input{
     max-width: calc(100% - 85px);
+    width: 100%;
 }
 #backButton{
     float: left;
@@ -100,6 +112,11 @@
     align-items: center;
     border-bottom: 1px solid #6c757d;
     cursor: pointer;
+}
+.contactsNames{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 #headContacts{
     height: 50px;

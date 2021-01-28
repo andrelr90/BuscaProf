@@ -47,7 +47,7 @@ function passportLogout() {
 }
 
 let setupRoutes = (app, passport) => {
-    
+
     app.post("/teste", (req, res) => {
         console.log("Teste");
         const teste = req.body.id;

@@ -30,7 +30,7 @@ class MessageController {
         const id = new Message({idSender: idSender});
         const {idContacts, contactFound, err} = await this.messageSchema.getContacts(id);
         
-        console.log(req.user)
+        // console.log(req.user);
         return res.json({idContacts: idContacts, contactFound: contactFound, err: err});
 
     }
