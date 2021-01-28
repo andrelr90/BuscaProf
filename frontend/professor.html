@@ -97,7 +97,7 @@
                 }
             },
             methods: {
-                async sendMessageDB(idLogged, id, text){
+                async sendMessageDB(id, text){
                     console.log("Loading messsages from "+id);
 
                     const headers = new Headers();
@@ -109,7 +109,7 @@
                         {
                             method: "POST",
                             headers,
-                            body: JSON.stringify({idSender: idLogged, idReceiver: id, text: text}),
+                            body: JSON.stringify({idReceiver: id, text: text}),
                             mode: "cors",
                             cache: "default"
                         }
@@ -134,16 +134,15 @@
                         messageDisplay.scrollTop = messageDisplay.scrollHeight
                     })
                 },
+
                 async loadContacts(){
                     // get contacts from the database here.
-                    // console.log("Loading contacts");
-
                     const headers = new Headers();
                     headers.append(
                         "Content-Type",
                         "application/json"
                     );
-                    const request = new Request( "http://localhost:3000/getContacts",
+                    const request = new Request( "/getContacts",
                         {
                             method: "POST",
                             headers,
@@ -154,7 +153,6 @@
                     );
                     const res = await fetch(request);
                     const response = await res.json();
-                    console.log(response);
                     this.contacts = response['idContacts'];
                 },
                 showContactScreen(){
@@ -162,7 +160,8 @@
                     this.$refs.contactScreen.style.display="block";
                     this.$refs.chatPage.style.display="none";
                 },
-                async getMessages(idLogged, id){
+
+                async getMessages(id){
                     console.log("Loading messsages from "+id);
 
                     const headers = new Headers();
@@ -174,7 +173,7 @@
                         {
                             method: "POST",
                             headers,
-                            body: JSON.stringify({idSender: idLogged, idReceiver: id}),
+                            body: JSON.stringify({idReceiver: id}),
                             mode: "cors",
                             cache: "default"
                         }
@@ -182,7 +181,11 @@
                     const res = await fetch(request);
                     const response = await res.json();
                     this.messages = response['messages'];
-                    console.log(response['messages']);
+
+                    Vue.nextTick(() => {
+                        let messageDisplay = this.$refs.chatArea
+                        messageDisplay.scrollTop = messageDisplay.scrollHeight
+                    })
                 },
                 showMessageScreen(name, id){
                     this.getMessages(id);
