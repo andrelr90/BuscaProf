@@ -36,7 +36,7 @@ class MessageController {
     }
 
     async getNotifications(req, res) {
-        const {idReceiver} = req.body;
+        const idReceiver = req.user.id;
         const id = new Message({idReceiver: idReceiver});
         const {idContacts, notificationFound, err} = await this.messageSchema.getNotifications(id);
         return res.json({idContacts: idContacts, notificationFound: notificationFound, err: err});

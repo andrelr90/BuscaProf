@@ -1,6 +1,6 @@
 const ProfData = require('../model/ProfData');
 const User = require('../model/User')
-//const hashService = require('../util/cryptService')
+const hashService = require('../util/CryptService')
 const userSchema = require("../schema/UserSchema");
 const profDataSchema = require('../schema/ProfDataSchema');
 
@@ -18,7 +18,13 @@ class UserController {
         const hashedPassword = await this.hashPassword(password);
         console.log(hashedPassword);
         const newUser = new User({email: email, password: hashedPassword, name: name, professor: professor})
-        const {success, err} = await this.userSchema.createUser(newUser);
+        let {success, err} = await this.userSchema.createUser(newUser);
+
+        if (err) {
+            if (err.code == 'ER_DUP_ENTRY') {
+                return res.json({success: false, err: "Email já cadastrado no sistema"});
+            }
+        }
         if (professor && success) {
             const {user, userFound, err} =  await this.getUserByEmail(email);
             const profData = new ProfData({id: user.id, description: "", price: 0});
@@ -57,14 +63,12 @@ class UserController {
     }
 
     async hashPassword(password) {
-        //const hashedPassword = await hashService.hashString(password);
-        const hashedPassword = 1;
+        const hashedPassword = await hashService.hashString(password);
         return hashedPassword;
     }
 
     async checkSamePassword(unhashedPassword, hashedPassword) {
-        //const isSamePassword = await hashService.checkSameHash(unhashedPassword, hashedPassword);
-        const isSamePassword = unhashedPassword === hashedPassword;
+        const isSamePassword = await hashService.checkSameHash(unhashedPassword, hashedPassword);
         return isSamePassword;
     }
 
@@ -91,6 +95,6 @@ class UserController {
 
 }
 
-const userController = new UserController(null, userSchema, profDataSchema);
+const userController = new UserController(hashService, userSchema, profDataSchema);
 
 module.exports = userController;

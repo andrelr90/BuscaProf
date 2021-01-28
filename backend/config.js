@@ -4,7 +4,7 @@ let sessionConfig = (app, session) => {
     const SESSION_CONFIG = {secret: 'TESTE',
         resave: false,
         saveUninitialized: false,
-        cookie: { maxAge: 30 * 60 * 1000 }//30min
+        cookie: { maxAge: 9999999999999999999999999}
     };
     app.use(session(SESSION_CONFIG));
 }
@@ -18,16 +18,11 @@ let passportConfig = (app, passport, LocalStrategy) => {
             passwordField: "password"
         },
         async function(email, password, done) {
-
-            //const user = new User(email, password);
             
             console.log("PassportTest");
             let submittedPassword = password;
-            const validPassword = true;
             
             const {user, userFound, err} = await userController.getUserByEmail(email);
-            
-            // todo check password
 
             if (err) { 
                 return done(err); 
@@ -35,6 +30,9 @@ let passportConfig = (app, passport, LocalStrategy) => {
             if (!userFound) {
                 return done(null, false, { message: 'Email not found.' });
             }
+
+            const validPassword = await userController.checkSamePassword(submittedPassword, user.password);
+            
             if (!validPassword) {
                 return done(null, false, { message: 'Incorrect password.' });
             }
@@ -44,7 +42,7 @@ let passportConfig = (app, passport, LocalStrategy) => {
 
     passport.serializeUser((user, done) => {
         console.log("SerializeUser");
-        const cookie = {id: user.id, name: user.email};
+        const cookie = {id: user.id, name: user.email, group: user.professor};
         done(null, cookie);
     });
 
