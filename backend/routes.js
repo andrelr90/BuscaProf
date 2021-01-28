@@ -74,6 +74,7 @@ let setupRoutes = (app, passport) => {
     app.get("/logout", passportLogout());
 
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));
+    app.post("/searchProf", (req, res) => userController.searchProfs(req, res));
 }
 
 module.exports = {setupRoutes};

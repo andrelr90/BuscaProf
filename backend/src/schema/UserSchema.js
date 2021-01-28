@@ -134,6 +134,26 @@ class UserSchema {
         db.disconnect(conn);
         return {users: users, userFound: userFound, err: err};
     }
+    async getProfs() {
+        const conn = await db.connect();
+        const sql = "SELECT * FROM Users WHERE professor = 1";
+        let err = null;
+        let userFound = false;
+        let users = null;
+        try {
+            const [rows, _] = await conn.execute(sql);
+            if (rows.length > 0) {
+                users = rows;
+                userFound = true;
+            }
+        }
+        catch(error) {
+            err = error;
+        }
+
+        db.disconnect(conn);
+        return {users: users, userFound: userFound, err: err};
+    }
 
 }
 

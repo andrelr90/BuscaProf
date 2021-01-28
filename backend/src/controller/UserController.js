@@ -92,6 +92,11 @@ class UserController {
 
         return res.json({users, userFound, err});
     }
+    async searchProfs(req, res) {
+        const {users, userFound, err} = await this.userSchema.getProfs()
+
+        return res.json({users, userFound, err});
+    }
 
 }
 

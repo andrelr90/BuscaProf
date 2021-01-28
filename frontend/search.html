@@ -87,40 +87,6 @@
 
         <script src="vue-components/nav.js"></script>
         <script src="vue-components/footer.js"></script>
-
-        <script>
-            Vue.createApp({
-                data() {
-                    return {
-                        professors: [
-                            { name: 'Uncle Ducson', price: 20.00, grade: 3, subjects: ['Probabilidade', 'Estatística'] }, 
-                            { name: 'Marcos Augusto Costa Moreira', price: 45.00, grade: 4, subjects: ['Calculo Diferencial e Integral I', 'Calculo Diferencial e Integral II', 'Equações Diferenciais C'] }
-                        ]
-                    }
-                }
-            }).mount('#professor-list');
-        </script>
-
-        <script>
-            Vue.createApp({
-                data() {
-                    return {
-                        subjects: ['Programação e Desenvolvimento de Software I','Introdução à Lógica Computacional','Geometria Analitica e Algebra Linear',
-                                    'Programação e Desenvolvimento de Software II', 'Matemática Discreta', 'Álgebra Linear Computacional', 'Calculo Diferencial e Integral I',
-                                    'Introdução a Banco de Dados', 'Introdução a Sistemas Logicos', 'Estruturas de Dados', 'Probabilidade', 'Calculo Diferencial e Integral II',
-                                    'Organização de Computadores I', 'Fundamentos da Teoria da Computação', 'Algoritmos I', 'Introdução à Ciência dos Dados',
-                                    'Algebra A', 'Linguagens de Programação', 'Pesquisa Operacional', 'Algoritmos II', 'Equações Diferenciais C', 'Compiladores I',
-                                    'Engenharia de Software', 'Sistemas Operacionais', 'Introdução à Fisica Estatistica Computacional', 'Redes de Computadores',
-                                    'Etica na Computação', 'Fundamentos de Sistemas Paralelos e Distribuidos', 'Introdução à Inteligência Artificial', 'Computação e Sociedade'],
-                        selectedSubs: []
-                    }
-                },
-                methods:{
-                    async filter(){
-                        
-                    }
-                }
-            }).mount('#subjects-filter');
         </script>
            <script>
             Vue.createApp({
@@ -161,12 +127,23 @@
                         );      
                         const res = await fetch(request);
                         const response = await res.json();
-                        this.professors = response["users"];
+                        this.professors = response["users"]
                         },
                         async filter(){
                             
-                        } 
-                    }
+                        },
+                        async getProf(){
+                            const request = new Request( "http://localhost:3000/searchProf",{
+                                method: "POST"
+                            });
+                            const res = await fetch(request);
+                            const response = await res.json();
+                            this.professors = response["users"]
+                        }
+                    },
+                    beforeMount(){
+                    this.getProf()
+                },
                 }).mount('#app');
         </script>
         
