@@ -57,8 +57,6 @@ chat.component('chat', {
     `,
     methods: {
         async sendMessageDB(id, text){
-            console.log("Loading messsages from "+id);
-
             const headers = new Headers();
             headers.append(
                 "Content-Type",
@@ -112,7 +110,6 @@ chat.component('chat', {
             );
             const res = await fetch(request);
             const response = await res.json();
-            console.log(response['idContacts'])
             this.contacts = response['idContacts'];
 
             this.showNotification = false;
@@ -135,8 +132,6 @@ chat.component('chat', {
         },
 
         async getMessages(id, scroll=false){
-            console.log("Loading messsages from "+id);
-
             const headers = new Headers();
             headers.append(
                 "Content-Type",
@@ -156,7 +151,6 @@ chat.component('chat', {
             this.messages = response['messages'];
             if(scroll)
                 Vue.nextTick(() => {
-                    console.log("aqui");
                     let messageDisplay = this.$refs.chatArea
                     messageDisplay.scrollTop = messageDisplay.scrollHeight
                 })

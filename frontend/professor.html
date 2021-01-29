@@ -23,11 +23,29 @@
         <div id="footer-vue">
             <footer-vue></footer-vue>
         </div>
-        
+
     </body>
 
     <script src="vue-components/nav.js"></script>
     <script src="vue-components/footer.js"></script>
     <script src="vue-components/chat.js"></script>
+    <script>
+        let uri = window.location.href.split('?');
+        var idProfesso = null
+        if (uri.length == 2){
+            let vars = uri[1].split('&');
+            let getVars = {};
+            let tmp = '';
+            vars.forEach(function(v){
+                tmp = v.split('=');
+                if(tmp.length == 2)
+                getVars[tmp[0]] = tmp[1];
+            });
+            idProfessor = getVars["idProfessor"]
+            idProfessor = idProfessor.replace("#", "")
+        }
 
+        // A variável idProfessor armazena o id passado para essa tela
+        alert(idProfessor);
+    </script>
 </html>
