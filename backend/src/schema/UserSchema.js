@@ -172,6 +172,35 @@ class UserSchema {
         db.disconnect(conn);
         return {users: users, userFound: userFound, err: err};
     }
+    async get_filter(subject){
+        const conn = await db.connect();
+        const sql = "SELECT users.name, profdata.price, users.id FROM ((users inner join subprof on subprof.professor = users.id) inner join subjects on subprof.subject = subjects.code) inner join profdata on users.id = profdata.id where subjects.subjectName = ?;";
+        let err = null;
+        let userFound = false;
+        let users = null;
+        let subjects = null;
+        try {
+            const [rows, _] = await conn.execute(sql, subject);
+            if (rows.length > 0) {
+                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                users = rows;
+                for (const [i, el] of users.entries()) {
+                    console.log("aqui")
+                    const [rows2, _] = await conn.execute(sql2, [el.id]);
+                    console.log(rows2)
+                    users[i].subjects = rows2
+                }
+                userFound = true;
+                console.log(users)
+            }
+        }
+        catch(error) {
+            err = error;
+        }
+
+        db.disconnect(conn);
+        return {users: users, userFound: userFound, err: err};
+    }
 
 }
 

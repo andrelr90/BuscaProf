@@ -79,6 +79,7 @@ let setupRoutes = (app, passport) => {
 
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));
     app.post("/searchProf", (req, res) => userController.searchProfs(req, res));
+    app.post("/filter", (req, res) => userController.filter(req, res));
 }
 
 module.exports = {setupRoutes};

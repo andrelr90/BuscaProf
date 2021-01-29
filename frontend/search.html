@@ -136,7 +136,23 @@
                         this.professors = response["users"]
                         },
                         async filter(){
-                            
+                            const headers = new Headers();
+                                headers.append(
+                                    "Content-Type",
+                                    "application/json"
+                                );
+                            const request = new Request( "http://localhost:3000/filter",
+                            {
+                                method: "POST",
+                                headers,
+                                body: JSON.stringify({ subjects: this.selectedSubs}),
+                                mode: "cors",
+                                cache: "default"
+                            }
+                        );
+                        const res = await fetch(request);
+                        const response = await res.json();
+                        this.professors = response["users"]   
                         },
                         async getProf(){
                             const request = new Request( "http://localhost:3000/searchProf",{
