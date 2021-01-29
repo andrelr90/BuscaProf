@@ -12,12 +12,17 @@ const {setupRoutes} = require('./routes.js');
 const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 
-const path = require("path")
+const path = require("path");
+const ejs = require('ejs');
+app.engine('html', ejs.renderFile);
+app.set('view engine', 'html');
+
 app.use(express.static(path.resolve("wwwroot", '../../frontend/'), {extensions: ['html', 'css']}));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
+
 
 (async function() {
     
