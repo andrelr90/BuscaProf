@@ -64,7 +64,11 @@ let setupRoutes = (app, passport) => {
     app.get("/logged", passportCheckLogin(0), (req, res) => {
         res.send(req.user);
     });
-    app.get('/ejstest/:id', (req, res) => res.render(path.resolve("wwwroot", '../../frontend/ejstest.html'), {id: req.params.id}))
+    app.get('/professor/:id', (req, res) => {
+        res.render(path.resolve("wwwroot", '../../frontend/professor.html'), {id: req.params.id} );
+
+    }
+        )
     app.post("/register", (req, res) => userController.createUser(req, res));
 
     app.post("/sendMessage", (req, res) => messageController.sendMessage(req, res));
