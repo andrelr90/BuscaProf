@@ -97,6 +97,11 @@ class UserController {
 
         return res.json({users, userFound, err});
     }
+    async filter(req, res){
+        const {users, userFound, err} = await this.userSchema.get_filter(req.body.subjects)
+
+        return res.json({users, userFound, err});
+    }
 
 }
 

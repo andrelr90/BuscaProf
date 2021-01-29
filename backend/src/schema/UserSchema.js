@@ -116,13 +116,22 @@ class UserSchema {
 
     async getProfByName(userToBeSearched) {
         const conn = await db.connect();
-        const sql = "SELECT * FROM Users WHERE name = ? AND professor = 1";
+        const sql = "select users.id, users.name, profdata.price from users inner join profdata on users.id = profdata.id where users.professor = 1 and users.name = ?";
         let err = null;
         let userFound = false;
         let users = null;
+        let subjects = null;
         try {
             const [rows, _] = await conn.execute(sql, [userToBeSearched.name]);
             if (rows.length > 0) {
+                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                users = rows;
+                for (const [i, el] of users.entries()) {
+                    console.log("aqui")
+                    const [rows2, _] = await conn.execute(sql2, [el.id]);
+                    console.log(rows2)
+                    users[i].subjects = rows2
+                }
                 users = rows;
                 userFound = true;
             }
@@ -136,15 +145,53 @@ class UserSchema {
     }
     async getProfs() {
         const conn = await db.connect();
-        const sql = "SELECT * FROM Users WHERE professor = 1";
+        const sql = "select users.id, users.name, profdata.price from users inner join profdata on users.id = profdata.id where users.professor = 1;";
         let err = null;
         let userFound = false;
         let users = null;
+        let subjects = null;
         try {
             const [rows, _] = await conn.execute(sql);
             if (rows.length > 0) {
+                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
                 users = rows;
+                for (const [i, el] of users.entries()) {
+                    console.log("aqui")
+                    const [rows2, _] = await conn.execute(sql2, [el.id]);
+                    console.log(rows2)
+                    users[i].subjects = rows2
+                }
                 userFound = true;
+                console.log(users)
+            }
+        }
+        catch(error) {
+            err = error;
+        }
+
+        db.disconnect(conn);
+        return {users: users, userFound: userFound, err: err};
+    }
+    async get_filter(subject){
+        const conn = await db.connect();
+        const sql = "SELECT users.name, profdata.price, users.id FROM ((users inner join subprof on subprof.professor = users.id) inner join subjects on subprof.subject = subjects.code) inner join profdata on users.id = profdata.id where subjects.subjectName = ?;";
+        let err = null;
+        let userFound = false;
+        let users = null;
+        let subjects = null;
+        try {
+            const [rows, _] = await conn.execute(sql, subject);
+            if (rows.length > 0) {
+                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                users = rows;
+                for (const [i, el] of users.entries()) {
+                    console.log("aqui")
+                    const [rows2, _] = await conn.execute(sql2, [el.id]);
+                    console.log(rows2)
+                    users[i].subjects = rows2
+                }
+                userFound = true;
+                console.log(users)
             }
         }
         catch(error) {

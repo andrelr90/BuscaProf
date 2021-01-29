@@ -17,10 +17,10 @@
         </div>
 
         <div class="container text-center" style="margin-top: 50px;" id="app">
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline my-2 my-lg-0" v-on:submit.prevent="getData()">
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nome" aria-label="Search" style="width:calc(100% - 167px);" ref="name" required>
                 <button class="btn btn-outline-secondary my-2 mx-sm-2" data-toggle="modal" data-target="#exampleModal" type="button">Filtrar</button>
-                <button @click.prevent="getData()" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
             </form>
               
             
@@ -63,7 +63,7 @@
                         </div>
                         <div class="row">
                             <div class="col-8 text-left">
-                                <span class="badge badge-secondary" style="margin-right:5px;" v-for="ps in professor.subjects">{{ps}}</span>
+                                <span class="badge badge-secondary" style="margin-right:5px;" v-for="ps in professor.subjects">{{ps.subjectName}}</span>
                             </div>
                             <div class="col-4 text-right">
                                 Avaliações: {{professor.grade}} / 5
@@ -73,7 +73,7 @@
                     </div>
                     <a href="#">
                         <div class="card-footer text-muted">
-                            Ver detalhes
+                            <button @click.prevent="get_details(professor.id)" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Ver detalhes</button>
                         </div>
                     </a>
                 </div>
@@ -136,7 +136,23 @@
                         this.professors = response["users"]
                         },
                         async filter(){
-                            
+                            const headers = new Headers();
+                                headers.append(
+                                    "Content-Type",
+                                    "application/json"
+                                );
+                            const request = new Request( "http://localhost:3000/filter",
+                            {
+                                method: "POST",
+                                headers,
+                                body: JSON.stringify({ subjects: this.selectedSubs}),
+                                mode: "cors",
+                                cache: "default"
+                            }
+                        );
+                        const res = await fetch(request);
+                        const response = await res.json();
+                        this.professors = response["users"]   
                         },
                         async getProf(){
                             const request = new Request( "http://localhost:3000/searchProf",{
@@ -145,6 +161,13 @@
                             const res = await fetch(request);
                             const response = await res.json();
                             this.professors = response["users"]
+                        },
+                        async get_details(value){
+                            console.log(value)
+                            const request = new Request( "http://localhost:3000/professor/"+value);
+                            const res = await fetch(request);
+                            console.log(res)
+                            window.location = res["url"];
                         }
                     },
                     beforeMount(){
