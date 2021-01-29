@@ -112,6 +112,7 @@
     align-items: center;
     border-bottom: 1px solid #6c757d;
     cursor: pointer;
+    position: relative;
 }
 .contactsNames{
     text-overflow: ellipsis;
@@ -125,4 +126,14 @@
     display: flex;
     justify-content:flex-start;
     align-items: center;
+}
+
+.notification{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgb(197, 37, 37);
+    right: 2px;
+    top: 2px;
+    position: absolute;
 }
