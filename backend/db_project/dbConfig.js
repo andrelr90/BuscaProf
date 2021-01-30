@@ -29,13 +29,13 @@ class Database{
 
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC203', 'Programação e Desenvolvimento de Software I')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC638', 'Introdução à Lógica Computacional')");
-		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT038', 'Geometria Analitica e Algebra Linear')");
+		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT038', 'Geometria Analítica e Álgebra Linear')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC204', 'Programação e Desenvolvimento de Software II')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC216', 'Matemática Discreta')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC639', 'Álgebra Linear Computacional')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT001', 'Calculo Diferencial e Integral I')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC011', 'Introdução a Banco de Dados')");
-		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC114', 'Introdução a Sistemas Logicos')");
+		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC114', 'Introdução a Sistemas Lógicos')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC205', 'Estruturas de Dados')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('EST032', 'Probabilidade')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT039', 'Calculo Diferencial e Integral II')");
@@ -43,7 +43,7 @@ class Database{
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC129', 'Fundamentos da Teoria da Computação')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC206', 'Algoritmos I')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC212', 'Introdução à Ciência dos Dados')");
-		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT034', 'Algebra A')");
+		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('MAT034', 'Álgebra A')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC299', 'Linguagens de Programação')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC035', 'Pesquisa Operacional')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC207', 'Algoritmos II')");
@@ -51,10 +51,10 @@ class Database{
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC053', 'Compiladores I')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC603', 'Engenharia de Software')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC605', 'Sistemas Operacionais')");
-		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('FIS156', 'Introdução à Fisica Estatistica Computacional')");
+		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('FIS156', 'Introdução à Física Estatística Computacional')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC023', 'Redes de Computadores')");
-		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC636', 'Etica na Computação')");
-		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC641', 'Fundamentos de Sistemas Paralelos e Distribuidos')");
+		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC636', 'Ética na Computação')");
+		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC641', 'Fundamentos de Sistemas Paralelos e Distribuídos')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC642', 'Introdução à Inteligência Artificial')");
 		conn.query("INSERT INTO Subjects (code, subjectName) VALUES ('DCC637', 'Computação e Sociedade')");
 

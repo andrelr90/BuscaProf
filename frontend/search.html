@@ -71,9 +71,9 @@
                         </div>
                         
                     </div>
-                    <a href="#">
+                    <a href="/professor?idProfessor=id">
                         <div class="card-footer text-muted">
-                            <button @click.prevent="get_details(professor.id)" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Ver detalhes</button>
+                            Ver detalhes
                         </div>
                     </a>
                 </div>
@@ -102,13 +102,14 @@
                             { name: 'Uncle Ducson', price: 20.00, grade: 3, subjects: ['Probabilidade', 'Estatística'] }, 
                             { name: 'Marcos Augusto Costa Moreira', price: 45.00, grade: 4, subjects: ['Calculo Diferencial e Integral I', 'Calculo Diferencial e Integral II', 'Equações Diferenciais C'] }
                         ],
-                        subjects: ['Programação e Desenvolvimento de Software I','Introdução à Lógica Computacional','Geometria Analitica e Algebra Linear',
-                                    'Programação e Desenvolvimento de Software II', 'Matemática Discreta', 'Álgebra Linear Computacional', 'Calculo Diferencial e Integral I',
-                                    'Introdução a Banco de Dados', 'Introdução a Sistemas Logicos', 'Estruturas de Dados', 'Probabilidade', 'Calculo Diferencial e Integral II',
-                                    'Organização de Computadores I', 'Fundamentos da Teoria da Computação', 'Algoritmos I', 'Introdução à Ciência dos Dados',
-                                    'Algebra A', 'Linguagens de Programação', 'Pesquisa Operacional', 'Algoritmos II', 'Equações Diferenciais C', 'Compiladores I',
-                                    'Engenharia de Software', 'Sistemas Operacionais', 'Introdução à Fisica Estatistica Computacional', 'Redes de Computadores',
-                                    'Etica na Computação', 'Fundamentos de Sistemas Paralelos e Distribuidos', 'Introdução à Inteligência Artificial', 'Computação e Sociedade'],
+                        subjects: ['Álgebra A','Álgebra Linear Computacional','Algoritmos I',
+                                    'Algoritmos II', 'Calculo Diferencial e Integral I', 'Calculo Diferencial e Integral II', 'Compiladores I',
+                                    'Computação e Sociedade', 'Engenharia de Software', 'Equações Diferenciais C', 'Estruturas de Dados', 'Ética na Computação',
+                                    'Fundamentos da Teoria da Computação', 'Fundamentos de Sistemas Paralelos e Distribuídos', 'Geometria Analítica e Álgebra Linear', 'Introdução a Banco de Dados',
+                                    'Introdução à Ciência dos Dados', 'Introdução à Física Estatística Computacional', 'Introdução à Inteligência Artificial', 'Introdução à Lógica Computacional', 
+                                    'Introdução a Sistemas Lógicos', 'Linguagens de Programação',
+                                    'Matemática Discreta', 'Organização de Computadores I', 'Pesquisa Operacional', 'Probabilidade',
+                                    'Programação e Desenvolvimento de Software I', 'Programação e Desenvolvimento de Software II', 'Redes de Computadores', 'Sistemas Operacionais'],
                         selectedSubs: [],
                         name: ''
                         }
@@ -161,13 +162,6 @@
                             const res = await fetch(request);
                             const response = await res.json();
                             this.professors = response["users"]
-                        },
-                        async get_details(value){
-                            console.log(value)
-                            const request = new Request( "http://localhost:3000/professor/"+value);
-                            const res = await fetch(request);
-                            console.log(res)
-                            window.location = res["url"];
                         }
                     },
                     beforeMount(){
