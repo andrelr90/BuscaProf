@@ -35,7 +35,7 @@
     <script src="vue-components/footer.js"></script>
     <script src="vue-components/chat.js"></script>
         <script>
-            /* let uri = window.location.href.split('?');
+             let uri = window.location.href.split('?');
         var idProfessor = null
         if (uri.length == 2){
             let vars = uri[1].split('&');
@@ -50,16 +50,14 @@
             idProfessor = idProfessor.replace("#", "")
         }
             // A variável idProfessor armazena o id passado para essa tela
-        alert(idProfessor);*/
             Vue.createApp({
                     data() {
                         return {
-                            professor: [],
-                            id: 1
+                            professor: []
                         }
                     },
                     methods: {
-                        async getData(){
+                        async getData(idProfessor){
                            // console.log(this.idProfessor)
                             const headers = new Headers();
                                 headers.append(
@@ -70,7 +68,7 @@
                             {
                                 method: "POST",
                                 headers,
-                                body: JSON.stringify({ id: this.id}),
+                                body: JSON.stringify({ id: idProfessor}),
                                 mode: "cors",
                                 cache: "default"
                             }
@@ -81,7 +79,7 @@
                         }
                     },
                     beforeMount(){
-                    this.getData()
+                    this.getData(idProfessor)
                 },
                 }).mount('#app');
         </script>
