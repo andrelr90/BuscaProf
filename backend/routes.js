@@ -7,8 +7,8 @@ function passportLogin(passport) {
         return passport.authenticate('local', (err, user, info) => {
             
             console.log("PassportLogin");
-            console.log(info);
-            console.log(user)
+            //console.log(info);
+            //console.log(user)
             if (err) {
                 throw err;
             }
@@ -32,7 +32,7 @@ function passportLogin(passport) {
     }
 }
 
-function passportCheckLogin(group) {
+function passportCheckLoginGroup(group) {
     return (req, res, next) => {
         console.log("PassportCheckLogin");
         if (req.isAuthenticated() && req.user.group === group) {
@@ -41,6 +41,29 @@ function passportCheckLogin(group) {
         res.redirect('/');
     }
 }
+
+function passportCheckLogin() {
+    return (req, res, next) => {
+        console.log("PassportCheckLogin");
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/');
+    }
+}
+
+
+function passportCheckNotLogin() {
+    return (req, res, next) => {
+        console.log("PassportCheckNotLogin");
+        console.log(req.isAuthenticated())
+        if (!req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/');
+    }
+}
+
 
 function passportLogout() {
     return (req, res, next) => {
@@ -59,22 +82,18 @@ let setupRoutes = (app, passport) => {
     });
     //app.get("/login", (req, res) => res.sendFile(path.resolve("wwwroot", '../../frontend/login.html')));
     //app.get("/professor", (req, res) => res.sendFile(path.resolve("wwwroot", '../../frontend/login.html')));
-    app.post("/login", passportLogin(passport));
+    app.post("/login", passportCheckNotLogin(), passportLogin(passport));
     
-    app.get("/logged", passportCheckLogin(0), (req, res) => {
+    app.get("/logged", passportCheckLoginGroup(0), (req, res) => {
         res.send(req.user);
     });
-    app.get('/professor/:id', (req, res) => {
-        res.render(path.resolve("wwwroot", '../../frontend/professor.html'), {id: req.params.id} );
+    
+    app.post("/register", passportCheckNotLogin(), (req, res) => userController.createUser(req, res));
 
-    }
-        )
-    app.post("/register", (req, res) => userController.createUser(req, res));
-
-    app.post("/sendMessage", (req, res) => messageController.sendMessage(req, res));
-    app.post("/getNotifications", (req, res) => messageController.getNotifications(req, res))
-    app.post("/getMessages", (req, res) => messageController.getMessages(req, res));
-    app.post("/getContacts", (req, res) => messageController.getContacts(req, res));
+    app.post("/sendMessage", passportCheckLogin(), (req, res) => messageController.sendMessage(req, res));
+    app.post("/getNotifications", passportCheckLogin(), (req, res) => messageController.getNotifications(req, res))
+    app.post("/getMessages", passportCheckLogin(), (req, res) => messageController.getMessages(req, res));
+    app.post("/getContacts", passportCheckLogin(), (req, res) => messageController.getContacts(req, res));
     app.get("/logout", passportLogout());
 
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));

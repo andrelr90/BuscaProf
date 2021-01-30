@@ -64,8 +64,8 @@ class MessageSchema {
 
         try {
             const [rows, _] = await conn.execute(sql, values);
-            console.log(rows)
-            console.log(rows.length)
+            //console.log(rows)
+            //console.log(rows.length)
             if (rows.length > 0) {
                 for (let row of rows) {
                     set.add(row.idSender);
@@ -77,7 +77,7 @@ class MessageSchema {
             err = error;
         }
         let uniq = [...set];
-        console.log(notificationFound)
+        //console.log(notificationFound)
         db.disconnect(conn); 
         return {idContacts: uniq, notificationFound: notificationFound, err: err};
     }
@@ -92,8 +92,8 @@ class MessageSchema {
         let set = new Set();
         try {
             const [rows, _] = await conn.execute(sql, values);
-            console.log(rows)
-            console.log(rows.length)
+            //console.log(rows)
+            //console.log(rows.length)
             
             if (rows.length > 0) {
                 for (let row of rows) {
@@ -128,7 +128,7 @@ class MessageSchema {
         for (let json of uniqJson) {
             uniqNoNotifications.push(JSON.parse(json));
         }
-        console.log(uniqNoNotifications)
+        //console.log(uniqNoNotifications)
         for (let user of uniqNoNotifications) {
             let userNotifiedOrNot = user;
             let id = 0;

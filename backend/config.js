@@ -49,13 +49,13 @@ let passportConfig = (app, passport, LocalStrategy) => {
     passport.deserializeUser(async (deserializedUser, done) => {
         console.log("DeserializeUser");
         const {user, userFound, err} = await userController.getUserById(deserializedUser.id);
-        console.log(user)
+        //console.log(user)
         const cookie = {
             id: user.id,
             name: user.name,
             group: user.professor
         };
-        console.log(cookie)
+        //console.log(cookie)
         if (userFound) {
             done(null, cookie)
         }

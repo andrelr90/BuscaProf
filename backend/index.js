@@ -13,9 +13,6 @@ const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
 
 const path = require("path");
-const ejs = require('ejs');
-app.engine('html', ejs.renderFile);
-app.set('view engine', 'html');
 
 app.use(express.static(path.resolve("wwwroot", '../../frontend/'), {extensions: ['html', 'css']}));
 
