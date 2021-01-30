@@ -132,7 +132,6 @@ class UserSchema {
                     console.log(rows2)
                     users[i].subjects = rows2
                 }
-                users = rows;
                 userFound = true;
             }
         }
@@ -200,6 +199,30 @@ class UserSchema {
 
         db.disconnect(conn);
         return {users: users, userFound: userFound, err: err};
+    }
+    async getProfById(userToBeSearched){
+        const conn = await db.connect();
+        const sql = "select users.id, users.name, profdata.price, profdata.description from users inner join profdata on users.id = profdata.id where users.professor = 1 and users.id = ?";
+        let err = null;
+        let userFound = false;
+        let user = null;
+        let subjects = null;
+        try {
+            const [rows, _] = await conn.execute(sql, [userToBeSearched.id]);
+            if (rows.length > 0) {
+                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                user = rows;
+                const [rows2, _] = await conn.execute(sql2, [user[0].id]);
+                user[0].subjects = rows2
+            }
+                userFound = true;
+        }
+        catch(error) {
+            err = error;
+        }
+
+        db.disconnect(conn);
+        return {user: user[0], userFound: userFound, err: err};
     }
 
 }

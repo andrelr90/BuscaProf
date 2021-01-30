@@ -102,6 +102,12 @@ class UserController {
 
         return res.json({users, userFound, err});
     }
+    async searchProfById(req, res){
+        const userToBeSearched = new User({id: req.body.id});
+        const {user, userFound, err} = await this.userSchema.getProfById(userToBeSearched)
+       // console.log(user)
+        return res.json({user, userFound, err});
+    }
 
 }
 

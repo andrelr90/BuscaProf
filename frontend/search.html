@@ -93,7 +93,7 @@
         <script src="vue-components/nav.js"></script>
         <script src="vue-components/footer.js"></script>
         <script src="vue-components/chat.js"></script>
-        </script>
+
            <script>
             Vue.createApp({
                     data() {
@@ -137,6 +137,9 @@
                         this.professors = response["users"]
                         },
                         async filter(){
+                            if(this.selectedSubs[0] == undefined){
+                                return
+                            }
                             const headers = new Headers();
                                 headers.append(
                                     "Content-Type",
