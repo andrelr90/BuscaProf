@@ -21,7 +21,7 @@ nav.component('nav-vue', {
         </nav>`,
         methods:{
             async logout(){
-                const request = new Request( "http://localhost:3000/logout");
+                const request = new Request( "/logout");
                 const res = await fetch(request);
                 window.location = res["url"];
             }

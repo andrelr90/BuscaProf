@@ -25,7 +25,7 @@
               
             
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog" role="document" style="overflow: initial;">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Disciplinas</h5>
@@ -34,10 +34,10 @@
                             </button>
                         </div>
                     <form class="text-left">
-                        <div class="modal-body">
+                        <div class="modal-body" syle="height: 300; overflow: auto;">
                         
                             <div class="form-check" v-for="subject in subjects">
-                                <input type="checkbox" class="form-check-input" :id="`${subject}`" v-model="selectedSubs" :value="`${subject}`">
+                                <input type="radio" class="form-check-input" :id="`${subject}`" v-model="selectedSubs" :value="`${subject}`">
                                 <label class="form-check-label" :for="`${subject}`">{{subject}}</label>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                                     "Content-Type",
                                     "application/json"
                                 );
-                            const request = new Request( "http://localhost:3000/searchDB",
+                            const request = new Request( "/searchDB",
                             {
                                 method: "POST",
                                 headers,
@@ -145,7 +145,7 @@
                                     "Content-Type",
                                     "application/json"
                                 );
-                            const request = new Request( "http://localhost:3000/filter",
+                            const request = new Request( "/filter",
                             {
                                 method: "POST",
                                 headers,
@@ -159,12 +159,13 @@
                         this.professors = response["users"]   
                         },
                         async getProf(){
-                            const request = new Request( "http://localhost:3000/searchProf",{
+                            const request = new Request( "/searchProf",{
                                 method: "POST"
                             });
                             const res = await fetch(request);
                             const response = await res.json();
                             this.professors = response["users"]
+                            console.log(response);
                         }
                     },
                     beforeMount(){

@@ -116,7 +116,7 @@ class UserSchema {
 
     async getProfByName(userToBeSearched) {
         const conn = await db.connect();
-        const sql = "select users.id, users.name, profdata.price from users inner join profdata on users.id = profdata.id where users.professor = 1 and users.name = ?";
+        const sql = "select Users.id, Users.name, ProfData.price from Users inner join ProfData on Users.id = ProfData.id where Users.professor = 1 and Users.name = ?";
         let err = null;
         let userFound = false;
         let users = null;
@@ -124,7 +124,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql, [userToBeSearched.name]);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
                 users = rows;
                 for (const [i, el] of users.entries()) {
                     console.log("aqui")
@@ -144,7 +144,7 @@ class UserSchema {
     }
     async getProfs() {
         const conn = await db.connect();
-        const sql = "select users.id, users.name, profdata.price from users inner join profdata on users.id = profdata.id where users.professor = 1;";
+        const sql = "select Users.id, Users.name, ProfData.price from Users inner join ProfData on Users.id = ProfData.id where Users.professor = 1;";
         let err = null;
         let userFound = false;
         let users = null;
@@ -152,7 +152,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
                 users = rows;
                 for (const [i, el] of users.entries()) {
                     console.log("aqui")
@@ -173,7 +173,7 @@ class UserSchema {
     }
     async get_filter(subject){
         const conn = await db.connect();
-        const sql = "SELECT users.name, profdata.price, users.id FROM ((users inner join subprof on subprof.professor = users.id) inner join subjects on subprof.subject = subjects.code) inner join profdata on users.id = profdata.id where subjects.subjectName = ?;";
+        const sql = "SELECT Users.name, ProfData.price, Users.id FROM ((Users inner join SubProf on SubProf.professor = Users.id) inner join subjects on SubProf.subject = subjects.code) inner join ProfData on Users.id = ProfData.id where subjects.subjectName = ?;";
         let err = null;
         let userFound = false;
         let users = null;
@@ -181,7 +181,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql, subject);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
                 users = rows;
                 for (const [i, el] of users.entries()) {
                     console.log("aqui")
@@ -202,7 +202,7 @@ class UserSchema {
     }
     async getProfById(userToBeSearched){
         const conn = await db.connect();
-        const sql = "select users.id, users.name, profdata.price, profdata.description from users inner join profdata on users.id = profdata.id where users.professor = 1 and users.id = ?";
+        const sql = "select Users.id, Users.name, ProfData.price, ProfData.description from Users inner join ProfData on Users.id = ProfData.id where Users.professor = 1 and Users.id = ?";
         let err = null;
         let userFound = false;
         let user = null;
@@ -210,7 +210,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql, [userToBeSearched.id]);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM subprof inner join subjects on subprof.subject = subjects.code where subprof.professor = ?";
+                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
                 user = rows;
                 const [rows2, _] = await conn.execute(sql2, [user[0].id]);
                 user[0].subjects = rows2
