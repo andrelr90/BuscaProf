@@ -29,7 +29,7 @@
            <div class="container text-center">
                <div class = "panel panel-defaul">
                   <h4> <div class = "panel-heading"> Áreas de conhecimento </div> </h4>
-                  <h4> <div class = "panel-body">  {{professor.subjects}} </div> </h4>
+                  <h4> <h4>  <div v-for="subject in professor.subjects"> {{subject.subjectName}} </div> </h4> </h4>
                </div>
            </div>
 
@@ -72,11 +72,17 @@
             Vue.createApp({
                     data() {
                         return {
-                            professor: []
+                            professor: [],
+                            id: null
                         }
                     },
                     methods: {
                         async getData(idProfessor){
+                            console.log("2")
+                            if(idProfessor != null){
+                                this.id = idProfessor
+                            }
+                         
                            // console.log(this.idProfessor)
                             const headers = new Headers();
                                 headers.append(
@@ -87,7 +93,7 @@
                             {
                                 method: "POST",
                                 headers,
-                                body: JSON.stringify({ id: idProfessor}),
+                                body: JSON.stringify({ id: this.id}),
                                 mode: "cors",
                                 cache: "default"
                             }
@@ -95,10 +101,26 @@
                         const res = await fetch(request);
                         const response = await res.json();
                         this.professor = response["user"]
+                        },
+                        async getLoggedUser(){
+                            if(idProfessor != null){
+                                this.getData(idProfessor)
+                            } else {
+                                const request = new Request( "/getLoggedUser",
+                                {
+                                    method: "POST"
+                                }
+                                )
+                                const res = await fetch(request);
+                                const response = await res.json()
+                                console.log(response.id)
+                                this.id = response.id;
+                                this.getData(this.id)
+                            }
                         }
                     },
                     beforeMount(){
-                    this.getData(idProfessor)
+                    this.getLoggedUser()
                 },
                 }).mount('#app');
         </script>

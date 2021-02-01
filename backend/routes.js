@@ -94,6 +94,7 @@ let setupRoutes = (app, passport) => {
     app.post("/getNotifications", passportCheckLogin(), (req, res) => messageController.getNotifications(req, res))
     app.post("/getMessages", passportCheckLogin(), (req, res) => messageController.getMessages(req, res));
     app.post("/getContacts", passportCheckLogin(), (req, res) => messageController.getContacts(req, res));
+    app.post("/getLoggedUser", passportCheckLogin(), (req, res) => userController.getLoggedUser(req, res));
     app.get("/logout", passportLogout());
 
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));

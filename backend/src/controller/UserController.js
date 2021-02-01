@@ -43,6 +43,13 @@ class UserController {
         
     }
 
+    async getLoggedUser(req, res){
+        const id = req.user.id;
+        const prof = req.user.group;
+
+        return res.json({id: id, prof: prof})
+    }
+
     async updateUser(req, res) {
         const {password, name, professor} = req.body;
         const id = req.user.id;

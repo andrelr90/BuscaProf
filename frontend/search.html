@@ -37,7 +37,7 @@
                         <div class="modal-body" syle="height: 300; overflow: auto;">
                         
                             <div class="form-check" v-for="subject in subjects">
-                                <input type="radio" class="form-check-input" :id="`${subject}`" v-model="selectedSubs" :value="`${subject}`">
+                                <input type="checkbox" class="form-check-input" :id="`${subject}`" v-model="selectedSubs" :value="`${subject}`">
                                 <label class="form-check-label" :for="`${subject}`">{{subject}}</label>
                             </div>
                         </div>
