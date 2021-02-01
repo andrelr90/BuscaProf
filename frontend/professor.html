@@ -116,20 +116,20 @@
                 async getLoggedUser(){
                     if(idProfessor != null){
                         this.getData(idProfessor);
-                        this.isProfessor = 0;
-                    } else {
-                        const request = new Request( "/getLoggedUser",
-                            {
-                                method: "POST"
-                            }
-                        )
-                        const res = await fetch(request);
-                        const response = await res.json()
-                        this.id = response.id;
-                        this.isProfessor = response.prof;
-                        console.log(response);
-                        this.getData(this.id)
+                        // this.isProfessor = 0;
                     }
+                    const request = new Request( "/getLoggedUser",
+                        {
+                            method: "POST"
+                        }
+                    )
+                    const res = await fetch(request);
+                    const response = await res.json()
+                    this.id = response.id;
+                    this.isProfessor = response.prof;
+                    console.log(response);
+                    this.getData(this.id)
+                    
                 },
                 async sendAddMessage(){
                     const headers = new Headers();
