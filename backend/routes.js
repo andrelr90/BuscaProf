@@ -103,6 +103,8 @@ let setupRoutes = (app, passport) => {
 
 
     app.post("/updateProfSubject", (req, res) => profController.updateProfSubject(req, res));
+    app.post("/updateProf", (req, res) => profController.updateProf(req, res));
+    app.post("/updateUser", (req, res) => userController.updateUser(req, res));
     app.post("/getAllSubjects", (req, res) => subjectController.getAllSubjects(req, res));
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));
     app.post("/searchProf", (req, res) => userController.searchProfs(req, res));

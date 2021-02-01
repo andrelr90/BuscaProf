@@ -27,8 +27,8 @@ class UserSchema {
 
     async updateUser(user) {
         const conn = await db.connect();
-        const sql = "UPDATE Users SET email = ?, name = ?, password = ?, professor = ? WHERE id = ?";
-        const values = [user.email, user.name, user. password, user.professor, user.id];
+        const sql = "UPDATE Users SET name = ?, password = ? WHERE id = ?";
+        const values = [user.name, user.password, user.id];
         let success = null;
         let err = null;
         try {
