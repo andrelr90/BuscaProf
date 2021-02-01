@@ -17,68 +17,34 @@
         </div>
 
         <div id="app">
-           <!-- <div class="container text-center">
-               <div class = "panel panel-primary">
-                  <h4> <div class = "panel-heading"> {{professor.name}} </div> </h4>
-                  <h4> <div class = "panel-body"> {{professor.description}} </div> </h4>
-               </div>
-           </div>
+            <div>
+                <div class="container text-center" style="margin-top:20px;">
+                    <h3 class="card-title"> {{professor.name}} </h3>
 
-           <div class = "row mt-3"> </div>
-
-           <div class="container text-center">
-               <div class = "panel panel-defaul">
-                  <h4> <div class = "panel-heading"> Áreas de conhecimento </div> </h4>
-                  <h4> <h4>  <div v-for="subject in professor.subjects"> {{subject.subjectName}} </div> </h4> </h4>
-               </div>
-           </div>
-
-           <div class = "row mt-3"> </div>
-
-           <h4 class="container text-center"> Preço Hr/aula: {{professor.price}} R$</h4> -->
-
-<!-- ------------------------------------------------------------------------------------------ -->
-
-           <div>
-                <div class="card" style="margin-top:20px;">
-                    <div class="card-body text-left">
-                        <div class="row">
-                            <div class="col-6 text-left" style="margin-left:220px;">
-                                <h3 class="card-title"> {{professor.name}} </h3>
-                            </div>
-
-                            <div class="col-2 text-right" style="margin-right:130px;">
-                                <button @click.prevent="filter()" type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Contatar</button>
-                            </div>
+                    <div class="card" style="margin-top: 15px;">
+                        <h5 class = "card-header"> Descrição </h5>
+                        <div class = "card-body">
+                            <p class = "card-text">{{professor.description}} </p>
                         </div>
-
-                        <div class="row" style = "margin-top:15px;">
-                            <div class="card" style = "margin-left:150px; width: 60rem;">
-                                <div class = "card-body">
-                                    <h5 class = "card-header"> Descrição </h5>
-                                    <p class = "card-text">{{professor.description}} </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" style = "margin-top:15px;">
-                            <div class="card" style = "margin-left:150px; width: 60rem;">
-                                <div class = "card-body">
-                                    <h5 class = "card-header"> Áreas de ensino </h5>
-                                    <p class = "card-text">{{professor.subjects}} </p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div class = "row">
-                        <div class="card" style = "margin-left:150px; width: 60rem; margin-bottom: 20px;">
-                                <div class = "card-body">
-                                    <p class = "card-text"> Preço Hora/Aula: {{professor.price}} R$ </p>
-                                </div>
-                            </div>
                     </div>
-                        
+
+                    <div class="card" style="margin-top: 15px;">
+                        <h5 class = "card-header"> Áreas de ensino </h5>
+                        <div class = "card-body">
+                            <p class = "card-text">
+                                <span class="badge badge-secondary" style="margin-right:5px; margin-top: 5px;" v-for="ps in professor.subjects">{{ps.subjectName}}</span>    
+                            </p>
                         </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 15px;">
+                        <h5 class = "card-header"> Preço Hora/Aula </h5>
+                        <div class = "card-body">
+                            <p class = "card-text">R$ {{professor.price}} </p>
+                        </div>
+                    </div>
+
+                    <button v-if="this.isProfessor==0" @click.prevent="this.sendAddMessage()" style="margin-top:20px;" type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Contatar</button>
                 </div>
             </div>
 
@@ -98,8 +64,8 @@
     <script src="vue-components/nav.js"></script>
     <script src="vue-components/footer.js"></script>
     <script src="vue-components/chat.js"></script>
-        <script>
-             let uri = window.location.href.split('?');
+    <script>
+        let uri = window.location.href.split('?');
         var idProfessor = null
         if (uri.length == 2){
             let vars = uri[1].split('&');
@@ -113,58 +79,81 @@
             idProfessor = getVars["idProfessor"]
             idProfessor = idProfessor.replace("#", "")
         }
-            // A variável idProfessor armazena o id passado para essa tela
-            Vue.createApp({
-                    data() {
-                        return {
-                            professor: [],
-                            id: null
+        // A variável idProfessor armazena o id passado para essa tela
+        Vue.createApp({
+            data() {
+                return {
+                    isProfessor: 1,
+                    professor: [],
+                    id: null
+                }
+            },
+            methods: {
+                async getData(idProfessor){
+                    if(idProfessor != null){
+                        this.id = idProfessor
+                    }
+                    
+                    // console.log(this.idProfessor)
+                    const headers = new Headers();
+                        headers.append(
+                            "Content-Type",
+                            "application/json"
+                        );
+                    const request = new Request( "/searchID",
+                        {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify({ id: this.id}),
+                            mode: "cors",
+                            cache: "default"
                         }
-                    },
-                    methods: {
-                        async getData(idProfessor){
-                            if(idProfessor != null){
-                                this.id = idProfessor
-                            }
-                         
-                           // console.log(this.idProfessor)
-                            const headers = new Headers();
-                                headers.append(
-                                    "Content-Type",
-                                    "application/json"
-                                );
-                            const request = new Request( "/searchID",
-                            {
-                                method: "POST",
-                                headers,
-                                body: JSON.stringify({ id: this.id}),
-                                mode: "cors",
-                                cache: "default"
-                            }
-                        );      
-                        const res = await fetch(request);
-                        const response = await res.json();
-                        this.professor = response["user"]
-                        },
-                        async getLoggedUser(){
-                            if(idProfessor != null){
-                                this.getData(idProfessor)
-                            } else {
-                                const request = new Request( "/getLoggedUser",
-                                {
-                                    method: "POST"
-                                }
-                                )
-                                const res = await fetch(request);
-                                const response = await res.json()
-                                this.id = response.id;
-                                this.getData(this.id)
-                            }
-                        }
-                    },
-                    beforeMount(){
-                    this.getLoggedUser()
+                    );      
+                    const res = await fetch(request);
+                    const response = await res.json();
+                    this.professor = response["user"]
                 },
-                }).mount('#app');
-        </script>
+                async getLoggedUser(){
+                    if(idProfessor != null){
+                        this.getData(idProfessor);
+                        this.isProfessor = 0;
+                    } else {
+                        const request = new Request( "/getLoggedUser",
+                            {
+                                method: "POST"
+                            }
+                        )
+                        const res = await fetch(request);
+                        const response = await res.json()
+                        this.id = response.id;
+                        this.isProfessor = response.prof;
+                        console.log(response);
+                        this.getData(this.id)
+                    }
+                },
+                async sendAddMessage(){
+                    const headers = new Headers();
+                    headers.append(
+                        "Content-Type",
+                        "application/json"
+                    );
+                    const request = new Request( "/sendMessage",
+                        {
+                            method: "POST",
+                            headers,
+                            body: JSON.stringify({idReceiver: idProfessor, text: "Te adicionou aos contatos.", notifications: false}),
+                            mode: "cors",
+                            cache: "default"
+                        }
+                    );      
+                    const res = await fetch(request);
+                    const response = await res.json();
+                    alert("Prfessor adicionado aos seus contatos")
+                }
+            },
+            beforeMount(){
+                this.getLoggedUser()
+            },
+        }).mount('#app');
+    </script>
 </html>
