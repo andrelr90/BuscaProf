@@ -17,7 +17,7 @@
         </div>
 
         <div id="app">
-           <div class="container text-center">
+           <!-- <div class="container text-center">
                <div class = "panel panel-primary">
                   <h4> <div class = "panel-heading"> {{professor.name}} </div> </h4>
                   <h4> <div class = "panel-body"> {{professor.description}} </div> </h4>
@@ -35,7 +35,52 @@
 
            <div class = "row mt-3"> </div>
 
-           <h4 class="container text-center"> Preço Hr/aula: {{professor.price}} R$</h4>
+           <h4 class="container text-center"> Preço Hr/aula: {{professor.price}} R$</h4> -->
+
+<!-- ------------------------------------------------------------------------------------------ -->
+
+           <div>
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-body text-left">
+                        <div class="row">
+                            <div class="col-6 text-left" style="margin-left:220px;">
+                                <h3 class="card-title"> {{professor.name}} </h3>
+                            </div>
+
+                            <div class="col-2 text-right" style="margin-right:130px;">
+                                <button @click.prevent="filter()" type="submit" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Contatar</button>
+                            </div>
+                        </div>
+
+                        <div class="row" style = "margin-top:15px;">
+                            <div class="card" style = "margin-left:150px; width: 60rem;">
+                                <div class = "card-body">
+                                    <h5 class = "card-header"> Descrição </h5>
+                                    <p class = "card-text">{{professor.description}} </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style = "margin-top:15px;">
+                            <div class="card" style = "margin-left:150px; width: 60rem;">
+                                <div class = "card-body">
+                                    <h5 class = "card-header"> Áreas de ensino </h5>
+                                    <p class = "card-text">{{professor.subjects}} </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div class = "row">
+                        <div class="card" style = "margin-left:150px; width: 60rem; margin-bottom: 20px;">
+                                <div class = "card-body">
+                                    <p class = "card-text"> Preço Hora/Aula: {{professor.price}} R$ </p>
+                                </div>
+                            </div>
+                    </div>
+                        
+                        </div>
+                </div>
+            </div>
 
         </div>
 
