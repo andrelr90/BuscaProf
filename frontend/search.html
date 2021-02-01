@@ -124,17 +124,18 @@
                                     "application/json"
                                 );
                             const request = new Request( "/searchDB",
-                            {
-                                method: "POST",
-                                headers,
-                                body: JSON.stringify({ name: this.name}),
-                                mode: "cors",
-                                cache: "default"
-                            }
-                        );      
-                        const res = await fetch(request);
-                        const response = await res.json();
-                        this.professors = response["users"]
+                                {
+                                    method: "POST",
+                                    headers,
+                                    body: JSON.stringify({ name: this.name}),
+                                    mode: "cors",
+                                    cache: "default"
+                                }
+                            );      
+                            const res = await fetch(request);
+                            const response = await res.json();
+                            this.professors = response["users"]
+                            console.log(this.professors)
                         },
                         async filter(){
                             if(this.selectedSubs[0] == undefined){
@@ -146,17 +147,17 @@
                                     "application/json"
                                 );
                             const request = new Request( "/filter",
-                            {
-                                method: "POST",
-                                headers,
-                                body: JSON.stringify({ subjects: this.selectedSubs}),
-                                mode: "cors",
-                                cache: "default"
-                            }
-                        );
-                        const res = await fetch(request);
-                        const response = await res.json();
-                        this.professors = response["users"]   
+                                {
+                                    method: "POST",
+                                    headers,
+                                    body: JSON.stringify({ subjects: this.selectedSubs}),
+                                    mode: "cors",
+                                    cache: "default"
+                                }
+                            );
+                            const res = await fetch(request);
+                            const response = await res.json();
+                            this.professors = response["users"]   
                         },
                         async getProf(){
                             const request = new Request( "/searchProf",{
