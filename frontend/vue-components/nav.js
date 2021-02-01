@@ -34,7 +34,7 @@ nav.component('nav-vue', {
                         <div class="modal-body" syle="height: 300; overflow: auto;">
                             Nome:
                             <input class="form-control mr-sm-2" type="text" id="nameInput" name="nameInput" v-model="name">
-                            Senha:
+                            Senha (Para manter a mesma senha, deixe em branco):
                             <input class="form-control mr-sm-2" type="password" id="passInput" name="passInput" v-model="pass">
                             
                             <div v-if="this.isProfessor==1">
@@ -76,6 +76,32 @@ nav.component('nav-vue', {
             const res = await fetch(request);
             window.location = res["url"];
         },
+        async startModalProf(id){  
+            const headers = new Headers();
+            headers.append(
+                "Content-Type",
+                "application/json"
+            );
+            const request = new Request( "/searchID",
+                {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify({ id: id}),
+                    mode: "cors",
+                    cache: "default"
+                }
+            );      
+            const res = await fetch(request);
+            const response = await res.json();
+            this.name = response["user"].name
+            this.price = response["user"].price
+            this.description = response["user"].description
+            for (j in response["user"].subjects){
+                // console.log(response["user"].subjects[j].code)
+                this.selectedSubs.push(response["user"].subjects[j].code)
+            }
+            // console.log(this.selectedSubs);
+        },
         async getLoggedUser(){
             const headers = new Headers();
                 headers.append(
@@ -93,8 +119,12 @@ nav.component('nav-vue', {
             )
             const res = await fetch(request);
             const response = await res.json();
-            console.log(response);
             this.isProfessor = response.prof;
+            if(this.isProfessor){
+                this.startModalProf(response.id);
+            } else{
+                this.name = response.name;
+            }
         },
         async getAllSubjects(){
             const headers = new Headers();

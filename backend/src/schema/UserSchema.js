@@ -210,7 +210,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql, [userToBeSearched.id]);
             if (rows.length > 0) {
-                const sql2 = "SELECT Subjects.subjectName FROM SubProf inner join Subjects on SubProf.subject = Subjects.code where SubProf.professor = ?";
+                const sql2 = "SELECT Subjects.subjectName, Subjects.code FROM SubProf inner join Subjects on SubProf.subject = Subjects.code where SubProf.professor = ?";
                 user = rows;
                 const [rows2, _] = await conn.execute(sql2, [user[0].id]);
                 user[0].subjects = rows2
