@@ -2,14 +2,16 @@
     width: 75px;
     height: 75px;
     border: #407FFF;
+    background-color: white;
 
     position: fixed;
-    bottom: 160px;
+    bottom: 40px;
     right: 10%;
     border-radius: 50%;
     box-shadow: 1px 1px 2.5px 1px rgba(0, 0, 0, 0.3);
 
     cursor: pointer;
+    z-index: 99999;
 }
 #chatButton:hover{
     box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
@@ -33,10 +35,11 @@
     box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
     
     position: fixed;
-    bottom: 250px;
+    bottom: 130px;
     right: 10%;
 
     display: none;
+    z-index: 99999;
 }
 #headChat{
     height: 50px;

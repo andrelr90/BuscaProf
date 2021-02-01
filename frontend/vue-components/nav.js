@@ -45,14 +45,14 @@ nav.component('nav-vue', {
 
                                 Minhas disciplinas:
                                 <div class="form-check" v-for="subject in subjects">
-                                    <input type="checkbox" class="form-check-input" :id="subject['code']" v-model="selectedSubs" :value="subject['code']">
+                                    <input type="checkbox" class="form-check-input" :name="subject['code']" :id="subject['code']" v-model="selectedSubs" :value="subject['code']">
                                     <label class="form-check-label" :for="subject['code']">{{subject['subjectName']}}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button v-if="this.isProfessor==1" @click.prevent="this.updateProfessor(); this.reload()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
-                            <button v-else @click.prevent="this.updateUser(); this.reload()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
+                            <button v-if="this.isProfessor==1" @click.prevent="this.updateProfessor()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
+                            <button v-else @click.prevent="this.updateUser()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
                         </div>
                     </form>
                 </div>
@@ -201,6 +201,7 @@ nav.component('nav-vue', {
             )
             const res = await fetch(request);
             const response = await res.json();
+            this.reload();
         },
         updateUser(){
             console.log(this.name);
