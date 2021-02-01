@@ -134,7 +134,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql, [userToBeSearched.name]);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
+                const sql2 = "SELECT Subjects.subjectName FROM SubProf inner join Subjects on SubProf.subject = Subjects.code where SubProf.professor = ?";
                 users = rows;
                 for (const [i, el] of users.entries()) {
                     console.log("aqui")
@@ -162,7 +162,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
+                const sql2 = "SELECT Subjects.subjectName FROM SubProf inner join Subjects on SubProf.subject = Subjects.code where SubProf.professor = ?";
                 users = rows;
                 for (const [i, el] of users.entries()) {
                     console.log("aqui")
@@ -183,7 +183,7 @@ class UserSchema {
     }
     async get_filter(subject){
         const conn = await db.connect();
-        const sql = "SELECT Users.name, ProfData.price, Users.id FROM ((Users inner join SubProf on SubProf.professor = Users.id) inner join subjects on SubProf.subject = subjects.code) inner join ProfData on Users.id = ProfData.id where subjects.subjectName = ?;";
+        const sql = "SELECT Users.name, ProfData.price, Users.id FROM ((Users inner join SubProf on SubProf.professor = Users.id) inner join Subjects on SubProf.subject = Subjects.code) inner join ProfData on Users.id = ProfData.id where Subjects.subjectName = ?;";
         let err = null;
         let userFound = false;
         let users = null;
@@ -191,7 +191,7 @@ class UserSchema {
         try {
             const [rows, _] = await conn.execute(sql, subject);
             if (rows.length > 0) {
-                const sql2 = "SELECT subjects.subjectName FROM SubProf inner join subjects on SubProf.subject = subjects.code where SubProf.professor = ?";
+                const sql2 = "SELECT Subjects.subjectName FROM SubProf inner join Subjects on SubProf.subject = Subjects.code where SubProf.professor = ?";
                 users = rows;
                 for (const [i, el] of users.entries()) {
                     console.log("aqui")
