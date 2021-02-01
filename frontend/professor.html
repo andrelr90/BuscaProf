@@ -78,7 +78,6 @@
                     },
                     methods: {
                         async getData(idProfessor){
-                            console.log("2")
                             if(idProfessor != null){
                                 this.id = idProfessor
                             }
@@ -113,7 +112,6 @@
                                 )
                                 const res = await fetch(request);
                                 const response = await res.json()
-                                console.log(response.id)
                                 this.id = response.id;
                                 this.getData(this.id)
                             }
