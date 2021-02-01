@@ -1,6 +1,8 @@
 const userController = require("./src/controller/UserController.js");
 const path = require("path");
 const messageController = require("./src/controller/MessageController.js");
+const subjectController = require("./src/controller/SubjectController.js");
+
 
 function passportLogin(passport) {
     return (req, res, next) => {
@@ -96,7 +98,9 @@ let setupRoutes = (app, passport) => {
     app.post("/getContacts", passportCheckLogin(), (req, res) => messageController.getContacts(req, res));
     app.post("/getLoggedUser", (req, res) => userController.getLoggedUser(req, res));
     app.get("/logout", passportLogout());
+    app.get("/", (req, res) => res.redirect("/home"));
 
+    app.post("/getAllSubjects", (req, res) => subjectController.getAllSubjects(req, res));
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));
     app.post("/searchProf", (req, res) => userController.searchProfs(req, res));
     app.post("/filter", (req, res) => userController.filter(req, res));

@@ -6,6 +6,33 @@ class SubjectSchema{
 	constructor() {
 
     }
+    async getAllSubjects() {
+        const conn = await db.connect();
+        const sql = "SELECT * FROM Subjects";
+        let err = null;
+        let subjectFound = false;
+        let subjects = null;
+        try {
+            const [rows, _] = await conn.execute(sql);
+            
+            if (rows.length > 0) {
+                subjects = rows;
+                subjectFound = true;
+            }
+            
+        }
+        catch(error) {
+            err = error;
+        }
+
+        console.log("A");
+        console.log(subjects);
+        console.log(subjectFound);
+        console.log(err);
+
+        db.disconnect(conn); 
+        return {subjects: subjects, subjectFound: subjectFound, err: err};
+    }
 
     async getSubjectByCode(subjectToBeSearched){
     	const conn = await db.connect();
