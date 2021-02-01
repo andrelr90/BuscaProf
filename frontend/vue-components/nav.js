@@ -51,8 +51,8 @@ nav.component('nav-vue', {
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button v-if="this.isProfessor==1" @click.prevent="this.updateProfessor()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
-                            <button v-else @click.prevent="this.updateUser()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
+                            <button v-if="this.isProfessor==1" @click.prevent="this.updateProfessor(); this.reload()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
+                            <button v-else @click.prevent="this.updateUser(); this.reload()" type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: auto;">Salvar modificações</button>
                         </div>
                     </form>
                 </div>
@@ -75,6 +75,9 @@ nav.component('nav-vue', {
             const request = new Request( "/logout");
             const res = await fetch(request);
             window.location = res["url"];
+        },
+        reload(){
+            window.location.reload();
         },
         async startModalProf(id){  
             const headers = new Headers();
