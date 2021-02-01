@@ -42,7 +42,7 @@ let passportConfig = (app, passport, LocalStrategy) => {
 
     passport.serializeUser((user, done) => {
         //console.log("SerializeUser");
-        const cookie = {id: user.id, name: user.email, group: user.professor};
+        const cookie = {id: user.id, name: user.name, group: user.professor};
         done(null, cookie);
     });
 

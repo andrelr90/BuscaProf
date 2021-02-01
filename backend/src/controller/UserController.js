@@ -46,8 +46,9 @@ class UserController {
     async getLoggedUser(req, res){
         const id = req.user.id;
         const prof = req.user.group;
+        const name = req.user.name;
 
-        return res.json({id: id, prof: prof})
+        return res.json({id: id, name: name, prof: prof})
     }
 
     async updateUser(req, res) {
