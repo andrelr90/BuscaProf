@@ -51,11 +51,11 @@ class UserController {
     }
 
     async updateUser(req, res) {
-        const {password, name, professor} = req.body;
+        const {password, name} = req.body;
         const id = req.user.id;
         const hashedPassword = await this.hashPassword(password);
         console.log(hashedPassword);
-        const userToBeUpdated = new User({id: id, password: hashedPassword, name: name, professor: professor})
+        const userToBeUpdated = new User({id: id, password: hashedPassword, name: name})
         const  {success, err} = await this.userSchema.updateUser(userToBeUpdated);
         
         return res.json({success: success, err: err});
