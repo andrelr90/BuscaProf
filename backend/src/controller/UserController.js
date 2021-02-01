@@ -54,9 +54,18 @@ class UserController {
     async updateUser(req, res) {
         const {password, name} = req.body;
         const id = req.user.id;
+        
+        let userToBeUpdated = null;
         const hashedPassword = await this.hashPassword(password);
-        console.log(hashedPassword);
-        const userToBeUpdated = new User({id: id, password: hashedPassword, name: name})
+        console.log(password)
+        console.log(password.length)
+        if (password.length > 0) {
+            userToBeUpdated = new User({id: id, password: hashedPassword, name: name})
+        }
+        else {
+            userToBeUpdated = new User({id: id, password: "", name: name})
+        }
+        
         const  {success, err} = await this.userSchema.updateUser(userToBeUpdated);
         
         return res.json({success: success, err: err});

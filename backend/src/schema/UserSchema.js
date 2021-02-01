@@ -30,6 +30,8 @@ class UserSchema {
 
         let sql = null;
         let values = null;
+        console.log(user.password)
+        console.log(user.password.length)
         if (user.password.length > 0) {
             sql = "UPDATE Users SET name = ?, password = ? WHERE id = ?";
             values = [user.name, user.password, user.id];
