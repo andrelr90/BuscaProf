@@ -8,7 +8,10 @@ Sistema para encontro e contato com professores particulares para as disciplinas
  * Pedro Geovanni Barbosa Ribeiro
  
 ### Requisitos funcionais:
-Professores particulares e alunos poderão se cadastrar no sistema a partir do fornecimento de alguns dados pessoais (funcionalidade cadastro). Ao entrar (funcionalidade login), alunos poderão buscar por professores filtrando por disciplina do curso (funcionalidade de pesquisa com filtro). Cada professor possuirá uma página própria padronizada no estilo anúncio (funcionalidade página de professor), contendo informações como disciplinas ofertadas, valor da hora/aula, número de ex-alunos e avaliações recebidas por esse professor. Um aluno poderá enviar uma mensagem para um professor (funcionalidade contactar professor) e avaliá-lo após o processo (funcionalidade avaliação de professores). O sistema terá escopo focado no curso de Ciência da Computação, apresentando em particular as principais disciplinas obrigatórias ofertadas no DCC/UFMG.
+Professores particulares e alunos poderão se cadastrar no sistema a partir do fornecimento de alguns dados pessoais (funcionalidade cadastro). Ao entrar (funcionalidade login), alunos poderão buscar por professores filtrando por disciplina do curso (funcionalidade de pesquisa com filtro). Cada professor possuirá uma página própria padronizada no estilo anúncio (funcionalidade página de professor), contendo informações como disciplinas ofertadas, valor da hora/aula, ~~número de ex-alunos e avaliações recebidas por esse professor~~. Um aluno poderá enviar uma mensagem para um professor (funcionalidade contactar professor) ~~e avaliá-lo após o processo (funcionalidade avaliação de professores)~~. O sistema terá escopo focado no curso de Ciência da Computação, apresentando em particular as principais disciplinas obrigatórias ofertadas no DCC/UFMG.
+
+#### Considerações sobre a funcionalidade avaliação de professores
+A funcionalidade de avaliar professores foi removida por não ser possível validar se um aluno de fato teve aulas com um dado professor, já que o sistema não inclui pagamentos.
 
 ### Proposta inicial de tecnologias:
 Para implementação do sistema serão utilizadas as seguintes tecnologias:
