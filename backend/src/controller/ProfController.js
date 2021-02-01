@@ -1,9 +1,12 @@
 const ProfData = require('../model/ProfData');
+const SubProf = require('../model/SubProf');
 const profDataSchema = require('../schema/ProfDataSchema');
+const subProfSchema = require("../schema/SubProfSchema");
 
 class ProfController {
-    constructor(profSchema) {
+    constructor(profSchema, subProfSchema) {
         this.profSchema = profSchema;
+        this.subProfSchema = subProfSchema;
     }
 
     async updateProf(req, res) {
@@ -18,10 +21,16 @@ class ProfController {
 
     async updateProfSubject(req, res) {
         const {subjects} = req.body;
+        console.log(req.body)
         const id = req.user.id;
-        const userToBeDeleted = new User({id: id})
-        const {success, err} = await this.profSchema.deleteUser(userToBeDeleted);
+        let subProfArray = []
+        for (let subject of subjects) {
+            subProfArray.push(new SubProf({professor: id, subject: subject}));
+        }
+        console.log(subProfArray)
 
+        const deleteResp = await this.subProfSchema.deleteAllSubProf(new SubProf({professor: id}));
+        const {success, err} = await this.subProfSchema.createManySubProf(subProfArray);
         return res.json({success: success, err: err});
     }
 
@@ -42,6 +51,6 @@ class ProfController {
 
 }
 
-const profController = new ProfController(profDataSchema);
+const profController = new ProfController(profDataSchema, subProfSchema);
 
 module.exports = profController;

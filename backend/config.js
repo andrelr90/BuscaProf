@@ -19,7 +19,7 @@ let passportConfig = (app, passport, LocalStrategy) => {
         },
         async function(email, password, done) {
             
-            console.log("PassportTest");
+            //console.log("PassportTest");
             let submittedPassword = password;
             
             const {user, userFound, err} = await userController.getUserByEmail(email);
@@ -41,13 +41,13 @@ let passportConfig = (app, passport, LocalStrategy) => {
     ));
 
     passport.serializeUser((user, done) => {
-        console.log("SerializeUser");
+        //console.log("SerializeUser");
         const cookie = {id: user.id, name: user.email, group: user.professor};
         done(null, cookie);
     });
 
     passport.deserializeUser(async (deserializedUser, done) => {
-        console.log("DeserializeUser");
+        //console.log("DeserializeUser");
         const {user, userFound, err} = await userController.getUserById(deserializedUser.id);
         //console.log(user)
         const cookie = {
