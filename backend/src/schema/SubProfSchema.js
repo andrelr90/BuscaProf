@@ -26,6 +26,41 @@ class SubProfSchema{
         return {success: success, err: err};
     }
 
+    async createManySubProf(subprofArray) {
+        let success = false;
+        let err = null;
+        let results = null;
+        for (let subProf of subprofArray) {
+            results = await this.createSubProf(subProf);
+            success = results.success;
+            err = results.err;
+
+            if (err) {
+                return {success: success, err: err};
+            }
+        }
+        return {success: success, err: err};
+    }
+
+    async deleteAllSubProf(subProf) {
+        const conn = await db.connect();
+        const sql = "DELETE FROM SubProf WHERE professor = ?";
+        const values = [subProf.professor];
+        let success = null;
+        let err = null;
+        try {
+            success = await conn.query(sql, values);
+        }
+        catch(error) {
+            err = error;
+        }
+        console.log(success);
+        console.log(`DeleteSubProf ${subProf}`)
+        db.disconnect(conn);
+        return {success: success, err: err};
+    }
+
+
     async deleteSubProf(subProf) {
         const conn = await db.connect();
         const sql = "DELETE FROM SubProf WHERE professor = ? AND subject = ?";

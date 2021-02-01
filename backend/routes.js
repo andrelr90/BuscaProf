@@ -2,13 +2,14 @@ const userController = require("./src/controller/UserController.js");
 const path = require("path");
 const messageController = require("./src/controller/MessageController.js");
 const subjectController = require("./src/controller/SubjectController.js");
+const profController = require("./src/controller/ProfController.js");
 
 
 function passportLogin(passport) {
     return (req, res, next) => {
         return passport.authenticate('local', (err, user, info) => {
             
-            console.log("PassportLogin");
+            //console.log("PassportLogin");
             //console.log(info);
             //console.log(user)
             if (err) {
@@ -22,7 +23,7 @@ function passportLogin(passport) {
                     if (err) {
                         throw err;
                     }
-                    console.log("QQ")
+                    //console.log("QQ")
                     if(user.professor == 0){
                         res.redirect("/search")
                     } else {
@@ -36,7 +37,7 @@ function passportLogin(passport) {
 
 function passportCheckLoginGroup(group) {
     return (req, res, next) => {
-        console.log("PassportCheckLogin");
+        //console.log("PassportCheckLogin");
         if (req.isAuthenticated() && req.user.group === group) {
             return next();
         }
@@ -46,7 +47,7 @@ function passportCheckLoginGroup(group) {
 
 function passportCheckLogin() {
     return (req, res, next) => {
-        console.log("PassportCheckLogin");
+        //console.log("PassportCheckLogin");
         if (req.isAuthenticated()) {
             return next();
         }
@@ -57,8 +58,8 @@ function passportCheckLogin() {
 
 function passportCheckNotLogin() {
     return (req, res, next) => {
-        console.log("PassportCheckNotLogin");
-        console.log(req.isAuthenticated())
+        //console.log("PassportCheckNotLogin");
+        //console.log(req.isAuthenticated())
         if (!req.isAuthenticated()) {
             return next();
         }
@@ -69,7 +70,7 @@ function passportCheckNotLogin() {
 
 function passportLogout() {
     return (req, res, next) => {
-        console.log("PassportLogout");
+        //console.log("PassportLogout");
         req.logout();
         res.redirect('/login');
     }
@@ -100,6 +101,8 @@ let setupRoutes = (app, passport) => {
     app.get("/logout", passportLogout());
     app.get("/", (req, res) => res.redirect("/home"));
 
+
+    app.post("/updateProfSubject", (req, res) => profController.updateProfSubject(req, res));
     app.post("/getAllSubjects", (req, res) => subjectController.getAllSubjects(req, res));
     app.post("/searchDB", (req, res) => userController.searchProfByName(req, res));
     app.post("/searchProf", (req, res) => userController.searchProfs(req, res));
