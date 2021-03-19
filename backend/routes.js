@@ -1,4 +1,4 @@
-const userController = require("./src/controller/UserController.js");
+const {userController} = require("./src/controller/UserController.js");
 const path = require("path");
 const messageController = require("./src/controller/MessageController.js");
 const subjectController = require("./src/controller/SubjectController.js");

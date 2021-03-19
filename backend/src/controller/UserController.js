@@ -80,12 +80,12 @@ class UserController {
     }
 
     async hashPassword(password) {
-        const hashedPassword = await hashService.hashString(password);
+        const hashedPassword = await this.hashService.hashString(password);
         return hashedPassword;
     }
 
     async checkSamePassword(unhashedPassword, hashedPassword) {
-        const isSamePassword = await hashService.checkSameHash(unhashedPassword, hashedPassword);
+        const isSamePassword = await this.hashService.checkSameHash(unhashedPassword, hashedPassword);
         return isSamePassword;
     }
 
@@ -130,4 +130,4 @@ class UserController {
 
 const userController = new UserController(hashService, userSchema, profDataSchema);
 
-module.exports = userController;
+module.exports = {userController, UserController};
