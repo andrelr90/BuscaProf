@@ -53,4 +53,4 @@ class ProfController {
 
 const profController = new ProfController(profDataSchema, subProfSchema);
 
-module.exports = profController;
+module.exports = {profController, ProfController};
