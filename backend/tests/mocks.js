@@ -43,4 +43,10 @@ class MockProfSchema {
     }
 };
 
+class MockMessageSchema {
+    constructor() {
+
+    }
+};
+
 module.exports = {MockHashService, MockUserSchema, MockProfSchema};
