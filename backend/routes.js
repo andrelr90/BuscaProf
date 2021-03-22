@@ -2,7 +2,7 @@ const {userController} = require("./src/controller/UserController.js");
 const path = require("path");
 const messageController = require("./src/controller/MessageController.js");
 const subjectController = require("./src/controller/SubjectController.js");
-const profController = require("./src/controller/ProfController.js");
+const {profController} = require("./src/controller/ProfController.js");
 
 
 function passportLogin(passport) {

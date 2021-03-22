@@ -26,7 +26,7 @@ class MockUserSchema {
         }
     }
     
-    async getUserById(user) {
+    async getUserById(user) { 
         if (user.id == 1) {
             const user = {id: 1, email: "teste@email.com", password: "teste", professor: false};
             return {user: user, userFound: true, err: null};
@@ -41,12 +41,31 @@ class MockProfSchema {
     constructor() {
         
     }
-};
-
-class MockMessageSchema {
-    constructor() {
-
+    async getProfDataById(user) { 
+        if (user.id == 1) {
+            const user = {id: 1, description: "Oi", price: 50};
+            return {user: user, userFound: true, err: null};
+        }
+        else {
+            return {user: null , userFound: false, err: null};
+        }
+    }
+    
+    async getUserById(user) {
+        if (user.id == 1) {
+            const user = {id: 1, description: "Oi", price: 50};
+            return {user: user, userFound: true, err: null};
+        }
+        else {
+            return {user: null , userFound: false, err: null};
+        }
     }
 };
 
-module.exports = {MockHashService, MockUserSchema, MockProfSchema};
+class MockSubProfSchema {
+    constructor() {
+        
+    }
+};
+
+module.exports = {MockHashService, MockUserSchema, MockProfSchema, MockSubProfSchema};
